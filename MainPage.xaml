@@ -1,0 +1,396 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EGET.App.MainPage"
+             BackgroundColor="#111111"
+             Title="EGET">
+
+    <ScrollView>
+
+        <VerticalStackLayout Spacing="0">
+
+            <!-- EGET HEADER -->
+            <Grid Padding="20,18,20,15"
+                  ColumnDefinitions="*,Auto"
+                  BackgroundColor="#111111">
+
+                <VerticalStackLayout Spacing="2">
+
+                    <Label Text="Eget"
+                           FontSize="34"
+                           FontAttributes="Bold"
+                           TextColor="#F6C800" />
+
+                    <Label Text="Find your next vehicle"
+                           FontSize="14"
+                           TextColor="White"
+                           Opacity="0.75" />
+
+                </VerticalStackLayout>
+
+                <!-- PROFILE BUTTON -->
+                <Border Grid.Column="1"
+                        WidthRequest="48"
+                        HeightRequest="48"
+                        BackgroundColor="#F6C800"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 24"
+                        VerticalOptions="Center">
+
+                    <Label Text="👤"
+                           FontSize="21"
+                           HorizontalTextAlignment="Center"
+                           VerticalTextAlignment="Center" />
+
+                </Border>
+
+            </Grid>
+
+
+            <!-- SEARCH SECTION -->
+            <VerticalStackLayout Padding="20,15,20,25"
+                                 Spacing="12">
+
+                <Label Text="Search vehicles"
+                       FontSize="20"
+                       FontAttributes="Bold"
+                       TextColor="White" />
+
+                <Border HeightRequest="54"
+                        Padding="15,0"
+                        BackgroundColor="White"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 12">
+
+                    <Grid ColumnDefinitions="Auto,*">
+
+                        <Label Text="🔍"
+                               FontSize="19"
+                               VerticalOptions="Center"
+                               Margin="0,0,10,0" />
+
+                        <Entry Grid.Column="1"
+                               Placeholder="Search cars, brands or models"
+                               PlaceholderColor="#777777"
+                               TextColor="#111111"
+                               FontSize="15"
+                               VerticalOptions="Center" />
+
+                    </Grid>
+
+                </Border>
+
+                <Button Text="Search Vehicles"
+                        HeightRequest="50"
+                        CornerRadius="10"
+                        BackgroundColor="#F6C800"
+                        TextColor="#111111"
+                        FontAttributes="Bold"
+                        FontSize="15" />
+
+            </VerticalStackLayout>
+
+
+            <!-- BUY / SELL SECTION -->
+            <VerticalStackLayout Padding="20,5,20,25"
+                                 Spacing="12">
+
+                <Label Text="What do you want to do?"
+                       FontSize="20"
+                       FontAttributes="Bold"
+                       TextColor="White" />
+
+                <Grid ColumnDefinitions="*,*"
+                      ColumnSpacing="12">
+
+                    <!-- BUY -->
+                    <Border BackgroundColor="#F6C800"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 12"
+                            HeightRequest="65">
+
+                        <VerticalStackLayout Spacing="2"
+                                             HorizontalOptions="Center"
+                                             VerticalOptions="Center">
+
+                            <Label Text="🚗"
+                                   FontSize="23"
+                                   HorizontalTextAlignment="Center" />
+
+                            <Label Text="Buy a Car"
+                                   FontSize="15"
+                                   FontAttributes="Bold"
+                                   TextColor="#111111"
+                                   HorizontalTextAlignment="Center" />
+
+                        </VerticalStackLayout>
+
+                    </Border>
+
+
+                    <!-- SELL -->
+                    <Border Grid.Column="1"
+                            BackgroundColor="#2A2A2A"
+                            Stroke="#F6C800"
+                            StrokeThickness="1"
+                            StrokeShape="RoundRectangle 12"
+                            HeightRequest="65">
+
+                        <VerticalStackLayout Spacing="2"
+                                             HorizontalOptions="Center"
+                                             VerticalOptions="Center">
+
+                            <Label Text="＋"
+                                   FontSize="25"
+                                   TextColor="#F6C800"
+                                   HorizontalTextAlignment="Center" />
+
+                            <Label Text="Sell a Car"
+                                   FontSize="15"
+                                   FontAttributes="Bold"
+                                   TextColor="White"
+                                   HorizontalTextAlignment="Center" />
+
+                        </VerticalStackLayout>
+
+                    </Border>
+
+                </Grid>
+
+            </VerticalStackLayout>
+
+
+            <!-- LATEST VEHICLES -->
+            <VerticalStackLayout Padding="20,5,20,30"
+                                 Spacing="15">
+
+                <!-- SECTION TITLE -->
+                <Grid ColumnDefinitions="*,Auto">
+
+                    <Label Text="Latest Vehicles"
+                           FontSize="22"
+                           FontAttributes="Bold"
+                           TextColor="White" />
+
+                    <Label Grid.Column="1"
+                           Text="See all"
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           TextColor="#F6C800"
+                           VerticalOptions="Center" />
+
+                </Grid>
+
+
+                <!-- VEHICLE CARD 1 -->
+                <Border BackgroundColor="#1F1F1F"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 15">
+
+                    <VerticalStackLayout Spacing="0">
+
+                        <!-- PHOTO AREA -->
+                        <Grid HeightRequest="190"
+      BackgroundColor="#2A2A2A">
+
+                            <Image Source="corolla1.png"
+           Aspect="AspectFill" />
+
+                            <Border Padding="8,4"
+            Margin="12"
+            BackgroundColor="#F6C800"
+            StrokeThickness="0"
+            StrokeShape="RoundRectangle 8"
+            HorizontalOptions="Start"
+            VerticalOptions="Start">
+
+                                <Label Text="FEATURED"
+               FontSize="11"
+               FontAttributes="Bold"
+               TextColor="#111111" />
+
+                            </Border>
+
+                        </Grid>
+
+
+                        <!-- VEHICLE INFORMATION -->
+                        <VerticalStackLayout Padding="15"
+                                             Spacing="7">
+
+                            <Label Text="2020 Toyota Corolla"
+                                   FontSize="19"
+                                   FontAttributes="Bold"
+                                   TextColor="White" />
+
+                            <Label Text="GH₵ 185,000"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="#F6C800" />
+
+                            <Grid ColumnDefinitions="*,*,*"
+                                  Margin="0,5,0,0">
+
+                                <Label Text="2020"
+                                       FontSize="13"
+                                       TextColor="#BBBBBB" />
+
+                                <Label Grid.Column="1"
+                                       Text="65,000 km"
+                                       FontSize="13"
+                                       TextColor="#BBBBBB" />
+
+                                <Label Grid.Column="2"
+                                       Text="Automatic"
+                                       FontSize="13"
+                                       TextColor="#BBBBBB" />
+
+                            </Grid>
+
+                            <Label Text="📍 Accra, Greater Accra"
+                                   FontSize="13"
+                                   TextColor="#BBBBBB"
+                                   Margin="0,3,0,0" />
+
+                        </VerticalStackLayout>
+
+                    </VerticalStackLayout>
+
+                </Border>
+
+
+                <!-- VEHICLE CARD 2 -->
+                <Border BackgroundColor="#1F1F1F"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 15">
+
+                    <VerticalStackLayout Spacing="0">
+
+                        <!-- PHOTO AREA -->
+                        <Grid HeightRequest="190"
+                              BackgroundColor="#2A2A2A">
+
+                            <Label Text="VEHICLE PHOTO"
+                                   FontSize="18"
+                                   TextColor="#777777"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center" />
+
+                        </Grid>
+
+
+                        <!-- VEHICLE INFORMATION -->
+                        <VerticalStackLayout Padding="15"
+                                             Spacing="7">
+
+                            <Label Text="2026 Range Rover Velar"
+                                   FontSize="19"
+                                   FontAttributes="Bold"
+                                   TextColor="White" />
+
+                            <Label Text="GH₵ 1,250,000"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="#F6C800" />
+
+                            <Grid ColumnDefinitions="*,*,*"
+                                  Margin="0,5,0,0">
+
+                                <Label Text="2026"
+                                       FontSize="13"
+                                       TextColor="#BBBBBB" />
+
+                                <Label Grid.Column="1"
+                                       Text="8,500 km"
+                                       FontSize="13"
+                                       TextColor="#BBBBBB" />
+
+                                <Label Grid.Column="2"
+                                       Text="Automatic"
+                                       FontSize="13"
+                                       TextColor="#BBBBBB" />
+
+                            </Grid>
+
+                            <Label Text="📍 Accra, Greater Accra"
+                                   FontSize="13"
+                                   TextColor="#BBBBBB"
+                                   Margin="0,3,0,0" />
+
+                        </VerticalStackLayout>
+
+                    </VerticalStackLayout>
+
+                </Border>
+
+
+                <!-- VEHICLE CARD 3 -->
+                <Border BackgroundColor="#1F1F1F"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 15">
+
+                    <VerticalStackLayout Spacing="0">
+
+                        <Grid HeightRequest="190"
+                              BackgroundColor="#2A2A2A">
+
+                            <Label Text="VEHICLE PHOTO"
+                                   FontSize="18"
+                                   TextColor="#777777"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center" />
+
+                        </Grid>
+
+
+                        <VerticalStackLayout Padding="15"
+                                             Spacing="7">
+
+                            <Label Text="2026 Toyota Land Cruiser"
+                                   FontSize="19"
+                                   FontAttributes="Bold"
+                                   TextColor="White" />
+
+                            <Label Text="GH₵ 1,450,000"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="#F6C800" />
+
+                            <Grid ColumnDefinitions="*,*,*"
+                                  Margin="0,5,0,0">
+
+                                <Label Text="2026"
+                                       FontSize="13"
+                                       TextColor="#BBBBBB" />
+
+                                <Label Grid.Column="1"
+                                       Text="5,000 km"
+                                       FontSize="13"
+                                       TextColor="#BBBBBB" />
+
+                                <Label Grid.Column="2"
+                                       Text="Automatic"
+                                       FontSize="13"
+                                       TextColor="#BBBBBB" />
+
+                            </Grid>
+
+                            <Label Text="📍 Accra, Greater Accra"
+                                   FontSize="13"
+                                   TextColor="#BBBBBB"
+                                   Margin="0,3,0,0" />
+
+                        </VerticalStackLayout>
+
+                    </VerticalStackLayout>
+
+                </Border>
+
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+
+</ContentPage>
