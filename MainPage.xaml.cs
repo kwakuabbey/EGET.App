@@ -6,4 +6,9 @@ public partial class MainPage : ContentPage
     {
         InitializeComponent();
     }
-}
+
+    private async void OnBuyCarTapped(object sender, TappedEventArgs e)
+    {
+        await Shell.Current.GoToAsync(nameof(BrowsePage));
+    }
+} 

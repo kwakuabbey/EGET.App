@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="EGET.App.BrowsePage"
+    BackgroundColor="#111111"
+    Title="Browse Cars">
+
+    <ScrollView>
+
+        <VerticalStackLayout
+            Padding="20"
+            Spacing="18">
+
+            <!-- PAGE TITLE -->
+            <Label
+                Text="Browse Vehicles"
+                FontSize="28"
+                FontAttributes="Bold"
+                TextColor="White" />
+
+            <Label
+                Text="Find your next car"
+                FontSize="15"
+                TextColor="#BBBBBB" />
+
+            <!-- SEARCH -->
+            <Border
+                BackgroundColor="White"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 14"
+                Padding="14">
+
+                <Grid ColumnDefinitions="Auto,*">
+
+                    <Label
+                        Text="🔍"
+                        FontSize="20"
+                        VerticalOptions="Center" />
+
+                    <Entry
+                        Grid.Column="1"
+                        Placeholder="Search brand or model"
+                        PlaceholderColor="#777777"
+                        TextColor="#111111"
+                        BackgroundColor="Transparent" />
+
+                </Grid>
+
+            </Border>
+
+            <!-- FILTER BUTTONS -->
+            <Grid
+                ColumnDefinitions="*,*"
+                ColumnSpacing="12">
+
+                <Button
+                    Text="Brand"
+                    BackgroundColor="#222222"
+                    TextColor="White"
+                    CornerRadius="12" />
+
+                <Button
+                    Grid.Column="1"
+                    Text="Price"
+                    BackgroundColor="#222222"
+                    TextColor="White"
+                    CornerRadius="12" />
+
+            </Grid>
+
+            <!-- VEHICLES -->
+            <Label
+                Text="Available Vehicles"
+                FontSize="21"
+                FontAttributes="Bold"
+                TextColor="White"
+                Margin="0,8,0,0" />
+
+            <!-- VEHICLE CARD 1 -->
+            <Border
+                BackgroundColor="#1F1F1F"
+                Stroke="#F7C900"
+                StrokeThickness="1"
+                StrokeShape="RoundRectangle 16">
+
+                <VerticalStackLayout>
+
+                    <Border
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 16,16,0,0">
+
+                        <Image
+                            Source="dotnet_bot.png"
+                            HeightRequest="190"
+                            Aspect="AspectFill" />
+
+                    </Border>
+
+                    <VerticalStackLayout
+                        Padding="15"
+                        Spacing="5">
+
+                        <Label
+                            Text="2020 Toyota Corolla"
+                            FontSize="19"
+                            FontAttributes="Bold"
+                            TextColor="White" />
+
+                        <Label
+                            Text="GH₵ 185,000"
+                            FontSize="18"
+                            FontAttributes="Bold"
+                            TextColor="#F7C900" />
+
+                        <Label
+                            Text="Automatic • Petrol • Accra"
+                            FontSize="14"
+                            TextColor="#BBBBBB" />
+
+                        <Button
+                            Text="View Details"
+                            BackgroundColor="#F7C900"
+                            TextColor="Black"
+                            FontAttributes="Bold"
+                            CornerRadius="10"
+                            Margin="0,8,0,0" />
+
+                    </VerticalStackLayout>
+
+                </VerticalStackLayout>
+
+            </Border>
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+
+</ContentPage>

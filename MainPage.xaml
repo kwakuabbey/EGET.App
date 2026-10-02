@@ -105,24 +105,29 @@
                       ColumnSpacing="12">
 
                     <!-- BUY -->
+                    
                     <Border BackgroundColor="#F6C800"
-                            StrokeThickness="0"
-                            StrokeShape="RoundRectangle 12"
-                            HeightRequest="65">
+        StrokeThickness="0"
+        StrokeShape="RoundRectangle 12"
+        HeightRequest="65">
+
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnBuyCarTapped" />
+                        </Border.GestureRecognizers>
 
                         <VerticalStackLayout Spacing="2"
-                                             HorizontalOptions="Center"
-                                             VerticalOptions="Center">
+                         HorizontalOptions="Center"
+                         VerticalOptions="Center">
 
                             <Label Text="🚗"
-                                   FontSize="23"
-                                   HorizontalTextAlignment="Center" />
+               FontSize="23"
+               HorizontalTextAlignment="Center" />
 
                             <Label Text="Buy a Car"
-                                   FontSize="15"
-                                   FontAttributes="Bold"
-                                   TextColor="#111111"
-                                   HorizontalTextAlignment="Center" />
+               FontSize="15"
+               FontAttributes="Bold"
+               TextColor="#111111"
+               HorizontalTextAlignment="Center" />
 
                         </VerticalStackLayout>
 
