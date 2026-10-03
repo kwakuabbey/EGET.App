@@ -68,9 +68,9 @@ Do not replace working features or create a new architecture unnecessarily.
 
 ## Team
 
-**Primary developer:** Kwaku
+**Co Founder:** Kwaku
 
-**Technical reviewer/advisor:** darkwaphil
+**Co Founder,Technical reviewer/advisor:** darkwaphil
 
 The reviewer may inspect the code, cross-check architecture, identify potential issues, and provide development recommendations.
 
