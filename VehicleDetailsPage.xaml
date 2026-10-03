@@ -150,11 +150,12 @@
                 Margin="0,5,0,20">
 
                 <Button
-                    Text="♡ Save"
-                    BackgroundColor="#222222"
-                    TextColor="White"
-                    CornerRadius="12"
-                    HeightRequest="52" />
+    Text="♡ Save"
+    BackgroundColor="#222222"
+    TextColor="White"
+    CornerRadius="12"
+    HeightRequest="52"
+    Clicked="OnSaveFavouriteClicked" />
 
                 <Button
                     Grid.Column="1"
