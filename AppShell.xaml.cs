@@ -8,5 +8,6 @@ public partial class AppShell : Shell
 
         Routing.RegisterRoute(nameof(BrowsePage), typeof(BrowsePage));
         Routing.RegisterRoute(nameof(VehicleDetailsPage), typeof(VehicleDetailsPage));
+        Routing.RegisterRoute(nameof(FavouritesPage), typeof(FavouritesPage));
     }
 }

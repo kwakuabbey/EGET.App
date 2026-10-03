@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="EGET.App.FavouritesPage"
+    BackgroundColor="#111111"
+    Title="Favourites">
+
+    <ScrollView>
+
+        <VerticalStackLayout
+            Padding="20"
+            Spacing="18">
+
+            <Label
+                Text="Favourites"
+                FontSize="28"
+                FontAttributes="Bold"
+                TextColor="White" />
+
+            <Label
+                Text="Vehicles you have saved"
+                FontSize="15"
+                TextColor="#BBBBBB" />
+
+            <!-- Empty favourites message -->
+            <Border
+                BackgroundColor="#1F1F1F"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 16"
+                Padding="25"
+                Margin="0,20,0,0">
+
+                <VerticalStackLayout
+                    Spacing="12"
+                    HorizontalOptions="Center">
+
+                    <Label
+                        Text="♡"
+                        FontSize="55"
+                        TextColor="#F6C800"
+                        HorizontalTextAlignment="Center" />
+
+                    <Label
+                        Text="No favourites yet"
+                        FontSize="20"
+                        FontAttributes="Bold"
+                        TextColor="White"
+                        HorizontalTextAlignment="Center" />
+
+                    <Label
+                        Text="Save vehicles you like and they will appear here."
+                        FontSize="14"
+                        TextColor="#BBBBBB"
+                        HorizontalTextAlignment="Center" />
+
+                </VerticalStackLayout>
+
+            </Border>
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+
+</ContentPage>

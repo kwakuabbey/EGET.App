@@ -20,9 +20,9 @@
                 StrokeShape="RoundRectangle 16">
 
                 <Image
-                    Source="dotnet_bot.png"
-                    HeightRequest="250"
-                    Aspect="AspectFill" />
+    Source="corolla1.png"
+    HeightRequest="250"
+    Aspect="AspectFill" />
 
             </Border>
 

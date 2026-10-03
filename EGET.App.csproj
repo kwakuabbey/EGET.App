@@ -74,6 +74,9 @@
 		<MauiXaml Update="BrowsePage.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
+		<MauiXaml Update="FavouritesPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 
 		<MauiXaml Update="VehicleDetailsPage.xaml">
 			<Generator>MSBuild:Compile</Generator>

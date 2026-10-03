@@ -30,22 +30,58 @@
                 </VerticalStackLayout>
 
                 <!-- PROFILE BUTTON -->
-                <Border Grid.Column="1"
-                        WidthRequest="48"
-                        HeightRequest="48"
-                        BackgroundColor="#F6C800"
-                        StrokeThickness="0"
-                        StrokeShape="RoundRectangle 24"
-                        VerticalOptions="Center">
+                <!-- FAVOURITES + PROFILE BUTTONS -->
+                <Grid Grid.Column="1"
+      ColumnDefinitions="48,48"
+      ColumnSpacing="8"
+      VerticalOptions="Center">
 
-                    <Label Text="👤"
-                           FontSize="21"
-                           HorizontalTextAlignment="Center"
-                           VerticalTextAlignment="Center" />
+                    <!-- FAVOURITES -->
+                    <Border
+        WidthRequest="48"
+        HeightRequest="48"
+        BackgroundColor="#2A2A2A"
+        Stroke="#F6C800"
+        StrokeThickness="1"
+        StrokeShape="RoundRectangle 24">
 
-                </Border>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnFavouritesTapped" />
+                        </Border.GestureRecognizers>
+
+                        <Label
+            Text="♡"
+            FontSize="25"
+            TextColor="#F6C800"
+            HorizontalTextAlignment="Center"
+            VerticalTextAlignment="Center" />
+
+                    </Border>
+
+                    <!-- PROFILE -->
+                    <Border
+        Grid.Column="1"
+        WidthRequest="48"
+        HeightRequest="48"
+        BackgroundColor="#F6C800"
+        StrokeThickness="0"
+        StrokeShape="RoundRectangle 24">
+
+                        <Label
+            Text="👤"
+            FontSize="21"
+            HorizontalTextAlignment="Center"
+            VerticalTextAlignment="Center" />
+
+                    </Border>
+
+                </Grid>
 
             </Grid>
+
+
+            <!-- SEARCH SECTION -->
+
 
 
             <!-- SEARCH SECTION -->
