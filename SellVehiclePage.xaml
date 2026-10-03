@@ -224,15 +224,19 @@
                 Margin="0,8,0,0" />
 
             <Border
-                BackgroundColor="#1F1F1F"
-                Stroke="#F6C800"
-                StrokeThickness="1"
-                StrokeShape="RoundRectangle 14"
-                Padding="20">
+    BackgroundColor="#1F1F1F"
+    Stroke="#F6C800"
+    StrokeThickness="1"
+    StrokeShape="RoundRectangle 14"
+    Padding="20">
 
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnAddPhotosTapped" />
+                </Border.GestureRecognizers>
+                 
                 <VerticalStackLayout
-                    Spacing="10"
-                    HorizontalOptions="Center">
+        Spacing="10"
+        HorizontalOptions="Center">
 
                     <Label
                         Text="＋"
@@ -256,6 +260,10 @@
                 </VerticalStackLayout>
 
             </Border>
+            <HorizontalStackLayout
+    x:Name="PhotoPreviewLayout"
+    Spacing="10"
+    HorizontalOptions="Start" />
 
             <!-- SUBMIT -->
             <Button
