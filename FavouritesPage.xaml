@@ -26,7 +26,9 @@
 
             <!-- Empty favourites message -->
             <Border
-                BackgroundColor="#1F1F1F"
+    x:Name="EmptyFavouritesView"
+    BackgroundColor="#1F1F1F"
+                
                 StrokeThickness="0"
                 StrokeShape="RoundRectangle 16"
                 Padding="25"
@@ -54,6 +56,55 @@
                         FontSize="14"
                         TextColor="#BBBBBB"
                         HorizontalTextAlignment="Center" />
+
+                </VerticalStackLayout>
+
+            </Border>
+
+            <!-- SAVED VEHICLE -->
+            <Border
+        x:Name="FavouriteVehicleView"
+        BackgroundColor="#1F1F1F"
+        Stroke="#F6C800"
+        StrokeThickness="1"
+        StrokeShape="RoundRectangle 16"
+        IsVisible="False">
+
+                <VerticalStackLayout
+            Spacing="0">
+
+                    <Image
+                Source="corolla1.png"
+                HeightRequest="190"
+                Aspect="AspectFill" />
+
+                    <VerticalStackLayout
+                Padding="15"
+                Spacing="7">
+
+                        <Label
+                    Text="2020 Toyota Corolla"
+                    FontSize="20"
+                    FontAttributes="Bold"
+                    TextColor="White" />
+
+                        <Label
+                    Text="GH₵ 185,000"
+                    FontSize="18"
+                    FontAttributes="Bold"
+                    TextColor="#F6C800" />
+
+                        <Label
+                    Text="65,000 km • Automatic • Petrol"
+                    FontSize="14"
+                    TextColor="#BBBBBB" />
+
+                        <Label
+                    Text="📍 Accra, Greater Accra"
+                    FontSize="14"
+                    TextColor="#BBBBBB" />
+
+                    </VerticalStackLayout>
 
                 </VerticalStackLayout>
 
