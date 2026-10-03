@@ -22,4 +22,9 @@ public partial class BrowsePage : ContentPage
         VehicleCard.IsVisible =
             VehicleName.Contains(searchText, StringComparison.OrdinalIgnoreCase);
     }
+
+    private async void OnViewDetailsClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync(nameof(VehicleDetailsPage));
+    }
 }

@@ -122,12 +122,13 @@
                             TextColor="#BBBBBB" />
 
                         <Button
-                            Text="View Details"
-                            BackgroundColor="#F7C900"
-                            TextColor="Black"
-                            FontAttributes="Bold"
-                            CornerRadius="10"
-                            Margin="0,8,0,0" />
+    Text="View Details"
+    BackgroundColor="#F7C900"
+    TextColor="Black"
+    FontAttributes="Bold"
+    CornerRadius="10"
+    Margin="0,8,0,0"
+    Clicked="OnViewDetailsClicked" />
 
                     </VerticalStackLayout>
 

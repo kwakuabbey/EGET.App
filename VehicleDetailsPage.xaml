@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="EGET.App.VehicleDetailsPage"
+    BackgroundColor="#111111"
+    Title="Vehicle Details">
+
+    <ScrollView>
+
+        <VerticalStackLayout
+            Padding="20"
+            Spacing="18">
+
+            <!-- Vehicle Image -->
+            <Border
+                BackgroundColor="#1F1F1F"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 16">
+
+                <Image
+                    Source="dotnet_bot.png"
+                    HeightRequest="250"
+                    Aspect="AspectFill" />
+
+            </Border>
+
+            <!-- Vehicle Name -->
+            <Label
+                Text="2020 Toyota Corolla"
+                FontSize="28"
+                FontAttributes="Bold"
+                TextColor="White" />
+
+            <!-- Price -->
+            <Label
+                Text="GH₵ 185,000"
+                FontSize="24"
+                FontAttributes="Bold"
+                TextColor="#F7C900" />
+
+            <!-- Vehicle Information -->
+            <Border
+                BackgroundColor="#1F1F1F"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 14"
+                Padding="15">
+
+                <Grid
+                    ColumnDefinitions="*,*"
+                    RowDefinitions="Auto,Auto,Auto"
+                    RowSpacing="15">
+
+                    <VerticalStackLayout>
+                        <Label
+                            Text="Year"
+                            FontSize="13"
+                            TextColor="#999999" />
+
+                        <Label
+                            Text="2020"
+                            FontSize="16"
+                            TextColor="White"
+                            FontAttributes="Bold" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout
+                        Grid.Column="1">
+
+                        <Label
+                            Text="Mileage"
+                            FontSize="13"
+                            TextColor="#999999" />
+
+                        <Label
+                            Text="65,000 km"
+                            FontSize="16"
+                            TextColor="White"
+                            FontAttributes="Bold" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout
+                        Grid.Row="1">
+
+                        <Label
+                            Text="Fuel"
+                            FontSize="13"
+                            TextColor="#999999" />
+
+                        <Label
+                            Text="Petrol"
+                            FontSize="16"
+                            TextColor="White"
+                            FontAttributes="Bold" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout
+                        Grid.Row="1"
+                        Grid.Column="1">
+
+                        <Label
+                            Text="Transmission"
+                            FontSize="13"
+                            TextColor="#999999" />
+
+                        <Label
+                            Text="Automatic"
+                            FontSize="16"
+                            TextColor="White"
+                            FontAttributes="Bold" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout
+                        Grid.Row="2">
+
+                        <Label
+                            Text="Location"
+                            FontSize="13"
+                            TextColor="#999999" />
+
+                        <Label
+                            Text="Accra, Greater Accra"
+                            FontSize="16"
+                            TextColor="White"
+                            FontAttributes="Bold" />
+                    </VerticalStackLayout>
+
+                </Grid>
+
+            </Border>
+
+            <!-- Description -->
+            <Label
+                Text="Description"
+                FontSize="21"
+                FontAttributes="Bold"
+                TextColor="White" />
+
+            <Label
+                Text="Well maintained Toyota Corolla available for sale. Contact the seller for more information and viewing arrangements."
+                FontSize="15"
+                LineHeight="1.4"
+                TextColor="#BBBBBB" />
+
+            <!-- Action Buttons -->
+            <Grid
+                ColumnDefinitions="*,*"
+                ColumnSpacing="12"
+                Margin="0,5,0,20">
+
+                <Button
+                    Text="♡ Save"
+                    BackgroundColor="#222222"
+                    TextColor="White"
+                    CornerRadius="12"
+                    HeightRequest="52" />
+
+                <Button
+                    Grid.Column="1"
+                    Text="Contact Seller"
+                    BackgroundColor="#F7C900"
+                    TextColor="#111111"
+                    FontAttributes="Bold"
+                    CornerRadius="12"
+                    HeightRequest="52" />
+
+            </Grid>
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+
+</ContentPage>
