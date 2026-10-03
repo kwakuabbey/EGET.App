@@ -16,4 +16,8 @@ public partial class MainPage : ContentPage
     {
         await Shell.Current.GoToAsync(nameof(FavouritesPage));
     }
+    private async void OnSellCarTapped(object sender, TappedEventArgs e)
+    {
+        await Shell.Current.GoToAsync(nameof(SellVehiclePage));
+    }
 }

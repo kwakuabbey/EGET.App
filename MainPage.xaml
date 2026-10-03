@@ -141,7 +141,7 @@
                       ColumnSpacing="12">
 
                     <!-- BUY -->
-                    
+
                     <Border BackgroundColor="#F6C800"
         StrokeThickness="0"
         StrokeShape="RoundRectangle 12"
@@ -172,26 +172,32 @@
 
                     <!-- SELL -->
                     <Border Grid.Column="1"
-                            BackgroundColor="#2A2A2A"
-                            Stroke="#F6C800"
-                            StrokeThickness="1"
-                            StrokeShape="RoundRectangle 12"
-                            HeightRequest="65">
+        BackgroundColor="#2A2A2A"
+        Stroke="#F6C800"
+        StrokeThickness="1"
+        StrokeShape="RoundRectangle 12"
+        HeightRequest="65">
 
-                        <VerticalStackLayout Spacing="2"
-                                             HorizontalOptions="Center"
-                                             VerticalOptions="Center">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnSellCarTapped" />
+                        </Border.GestureRecognizers>
 
-                            <Label Text="＋"
-                                   FontSize="25"
-                                   TextColor="#F6C800"
-                                   HorizontalTextAlignment="Center" />
+                        <VerticalStackLayout
+        Spacing="2"
+        HorizontalOptions="Center"
+        VerticalOptions="Center">
 
-                            <Label Text="Sell a Car"
-                                   FontSize="15"
-                                   FontAttributes="Bold"
-                                   TextColor="White"
-                                   HorizontalTextAlignment="Center" />
+                            <Label
+            Text="💰"
+            FontSize="21"
+            HorizontalTextAlignment="Center" />
+
+                            <Label
+            Text="Sell a Car"
+            FontSize="16"
+            FontAttributes="Bold"
+            TextColor="White"
+            HorizontalTextAlignment="Center" />
 
                         </VerticalStackLayout>
 
