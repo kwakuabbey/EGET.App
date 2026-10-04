@@ -233,7 +233,7 @@
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnAddPhotosTapped" />
                 </Border.GestureRecognizers>
-                 
+
                 <VerticalStackLayout
         Spacing="10"
         HorizontalOptions="Center">
@@ -260,10 +260,16 @@
                 </VerticalStackLayout>
 
             </Border>
-            <HorizontalStackLayout
-    x:Name="PhotoPreviewLayout"
-    Spacing="10"
-    HorizontalOptions="Start" />
+            <ScrollView
+    Orientation="Horizontal"
+    HorizontalScrollBarVisibility="Never">
+
+                <HorizontalStackLayout
+        x:Name="PhotoPreviewLayout"
+        Spacing="10"
+        HorizontalOptions="Start" />
+
+            </ScrollView>
 
             <!-- SUBMIT -->
             <Button
