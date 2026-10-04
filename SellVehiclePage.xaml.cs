@@ -54,7 +54,6 @@ public partial class SellVehiclePage : ContentPage
             HeightRequest = 120
         };
 
-        // ADD PHOTO TO CONTAINER
         photoContainer.Children.Add(imageFrame);
 
         // REMOVE BUTTON
@@ -73,16 +72,139 @@ public partial class SellVehiclePage : ContentPage
             VerticalOptions = LayoutOptions.Start
         };
 
-        // REMOVE PHOTO WHEN × IS PRESSED
+        // REMOVE PHOTO
         removeButton.Clicked += (sender, e) =>
         {
             PhotoPreviewLayout.Children.Remove(photoContainer);
         };
 
-        // ADD BUTTON ON TOP OF PHOTO
         photoContainer.Children.Add(removeButton);
 
-        // ADD COMPLETE PHOTO CONTAINER TO PREVIEW AREA
         PhotoPreviewLayout.Children.Add(photoContainer);
+    }
+
+    // CREATE VEHICLE LISTING
+    private async void OnCreateVehicleListingClicked(object sender, EventArgs e)
+    {
+        // CHECK BRAND
+        if (string.IsNullOrWhiteSpace(BrandEntry.Text))
+        {
+            await DisplayAlert(
+                "Missing Information",
+                "Please enter the vehicle brand.",
+                "OK");
+
+            BrandEntry.Focus();
+            return;
+        }
+
+        // CHECK MODEL
+        if (string.IsNullOrWhiteSpace(ModelEntry.Text))
+        {
+            await DisplayAlert(
+                "Missing Information",
+                "Please enter the vehicle model.",
+                "OK");
+
+            ModelEntry.Focus();
+            return;
+        }
+
+        // CHECK YEAR
+        if (string.IsNullOrWhiteSpace(YearEntry.Text))
+        {
+            await DisplayAlert(
+                "Missing Information",
+                "Please enter the vehicle year.",
+                "OK");
+
+            YearEntry.Focus();
+            return;
+        }
+
+        // CHECK PRICE
+        if (string.IsNullOrWhiteSpace(PriceEntry.Text))
+        {
+            await DisplayAlert(
+                "Missing Information",
+                "Please enter the vehicle price.",
+                "OK");
+
+            PriceEntry.Focus();
+            return;
+        }
+
+        // CHECK MILEAGE
+        if (string.IsNullOrWhiteSpace(MileageEntry.Text))
+        {
+            await DisplayAlert(
+                "Missing Information",
+                "Please enter the vehicle mileage.",
+                "OK");
+
+            MileageEntry.Focus();
+            return;
+        }
+
+        // CHECK CITY
+        if (string.IsNullOrWhiteSpace(CityEntry.Text))
+        {
+            await DisplayAlert(
+                "Missing Information",
+                "Please enter the city.",
+                "OK");
+
+            CityEntry.Focus();
+            return;
+        }
+
+        // CHECK REGION
+        if (string.IsNullOrWhiteSpace(RegionEntry.Text))
+        {
+            await DisplayAlert(
+                "Missing Information",
+                "Please enter the region.",
+                "OK");
+
+            RegionEntry.Focus();
+            return;
+        }
+
+        // CHECK DESCRIPTION
+        string description = DescriptionEditor.Text?.Trim() ?? "";
+
+        int wordCount = description
+            .Split(
+                new[] { ' ', '\r', '\n', '\t' },
+                StringSplitOptions.RemoveEmptyEntries)
+            .Length;
+
+        if (wordCount < 5)
+        {
+            await DisplayAlert(
+                "Missing Information",
+                "Please provide a vehicle description with at least 5 words.",
+                "OK");
+
+            DescriptionEditor.Focus();
+            return;
+        }
+
+        // CHECK PHOTOS
+        if (PhotoPreviewLayout.Children.Count < 5)
+        {
+            await DisplayAlert(
+                "Missing Photos",
+                "Please add at least 5 photos of your vehicle.",
+                "OK");
+
+            return;
+        }
+
+        // ALL REQUIRED INFORMATION IS VALID
+        await DisplayAlert(
+            "Vehicle Listing",
+            "All required vehicle information has been entered successfully.",
+            "OK");
     }
 }
