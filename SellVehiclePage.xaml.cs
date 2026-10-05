@@ -2,11 +2,14 @@ namespace EGET.App;
 
 public partial class SellVehiclePage : ContentPage
 {
+    private readonly List<string> selectedPhotoPaths = new();
+
     public SellVehiclePage()
     {
         InitializeComponent();
     }
 
+    // ADD VEHICLE PHOTOS
     private async void OnAddPhotosTapped(object sender, TappedEventArgs e)
     {
         var photos = await MediaPicker.Default.PickPhotosAsync();
@@ -15,13 +18,16 @@ public partial class SellVehiclePage : ContentPage
             return;
 
         PhotoPreviewLayout.Children.Clear();
+        selectedPhotoPaths.Clear();
 
         foreach (var photo in photos)
         {
+            selectedPhotoPaths.Add(photo.FullPath);
             AddPhotoPreview(photo.FullPath);
         }
     }
 
+    // CREATE PHOTO PREVIEW
     private void AddPhotoPreview(string photoPath)
     {
         // PHOTO IMAGE
@@ -76,6 +82,7 @@ public partial class SellVehiclePage : ContentPage
         removeButton.Clicked += (sender, e) =>
         {
             PhotoPreviewLayout.Children.Remove(photoContainer);
+            selectedPhotoPaths.Remove(photoPath);
         };
 
         photoContainer.Children.Add(removeButton);
@@ -191,7 +198,7 @@ public partial class SellVehiclePage : ContentPage
         }
 
         // CHECK PHOTOS
-        if (PhotoPreviewLayout.Children.Count < 5)
+        if (selectedPhotoPaths.Count < 5)
         {
             await DisplayAlert(
                 "Missing Photos",
@@ -213,8 +220,12 @@ public partial class SellVehiclePage : ContentPage
             Transmission = TransmissionPicker.SelectedItem?.ToString() ?? "",
             City = CityEntry.Text?.Trim() ?? "",
             Region = RegionEntry.Text?.Trim() ?? "",
-            Description = DescriptionEditor.Text?.Trim() ?? ""
+            Description = DescriptionEditor.Text?.Trim() ?? "",
+            PhotoPaths = new List<string>(selectedPhotoPaths)
         };
+
+        // SAVE VEHICLE
+        VehicleStorage.AddVehicle(vehicle);
 
         // CONFIRM VEHICLE WAS CREATED
         await DisplayAlert(

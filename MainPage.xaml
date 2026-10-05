@@ -229,6 +229,10 @@
 
                 </Grid>
 
+                <!-- SAVED VEHICLES FROM SELL YOUR CAR -->
+                <VerticalStackLayout
+    x:Name="SavedVehiclesLayout"
+    Spacing="15" />
 
                 <!-- VEHICLE CARD 1 -->
                 <Border BackgroundColor="#1F1F1F"
