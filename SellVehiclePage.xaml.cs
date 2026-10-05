@@ -201,10 +201,25 @@ public partial class SellVehiclePage : ContentPage
             return;
         }
 
-        // ALL REQUIRED INFORMATION IS VALID
+        // CREATE VEHICLE OBJECT
+        var vehicle = new Vehicle
+        {
+            Brand = BrandEntry.Text?.Trim() ?? "",
+            Model = ModelEntry.Text?.Trim() ?? "",
+            Year = YearEntry.Text?.Trim() ?? "",
+            Price = PriceEntry.Text?.Trim() ?? "",
+            Mileage = MileageEntry.Text?.Trim() ?? "",
+            Fuel = FuelPicker.SelectedItem?.ToString() ?? "",
+            Transmission = TransmissionPicker.SelectedItem?.ToString() ?? "",
+            City = CityEntry.Text?.Trim() ?? "",
+            Region = RegionEntry.Text?.Trim() ?? "",
+            Description = DescriptionEditor.Text?.Trim() ?? ""
+        };
+
+        // CONFIRM VEHICLE WAS CREATED
         await DisplayAlert(
             "Vehicle Listing",
-            "All required vehicle information has been entered successfully.",
+            $"{vehicle.Brand} {vehicle.Model} listing has been created successfully.",
             "OK");
     }
 }
