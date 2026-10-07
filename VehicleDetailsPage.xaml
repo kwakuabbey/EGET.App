@@ -168,13 +168,14 @@
                    Clicked="OnSaveFavouriteClicked" />
 
                 <Button
-                    Grid.Column="1"
-                    Text="Contact Seller"
-                    BackgroundColor="#F7C900"
-                    TextColor="#111111"
-                    FontAttributes="Bold"
-                    CornerRadius="12"
-                    HeightRequest="52" />
+                   Grid.Column="1"
+                   Text="Contact Seller"
+                   BackgroundColor="#F7C900"
+                   TextColor="#111111"
+                   FontAttributes="Bold"
+                   CornerRadius="12"
+                   HeightRequest="52"
+                   Clicked="OnContactSellerClicked" />
 
             </Grid>
 

@@ -108,4 +108,13 @@ public partial class VehicleDetailsPage : ContentPage
 
         await Shell.Current.GoToAsync(nameof(FavouritesPage));
     }
+
+    // CONTACT SELLER
+    private async void OnContactSellerClicked(object sender, EventArgs e)
+    {
+        await DisplayAlert(
+            "Contact Seller",
+            "Seller communication will be available here.",
+            "OK");
+    }
 }
