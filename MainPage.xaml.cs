@@ -18,12 +18,13 @@ public partial class MainPage : ContentPage
     {
         await Shell.Current.GoToAsync(nameof(FavouritesPage));
     }
+
     private async void OnSellCarTapped(object sender, TappedEventArgs e)
     {
         await Shell.Current.GoToAsync(nameof(SellVehiclePage));
     }
 
-
+    // LOAD SAVED VEHICLES
     private void LoadSavedVehicles()
     {
         SavedVehiclesLayout.Children.Clear();
@@ -64,25 +65,28 @@ public partial class MainPage : ContentPage
             var information = new VerticalStackLayout
             {
                 Padding = 15,
-                Spacing = 7
+                Spacing = 8
             };
 
+            // VEHICLE NAME
             var nameLabel = new Label
             {
-                Text = $"{vehicle.Year} {vehicle.Brand} {vehicle.Model}",
+                Text = $"{vehicle.Year} {FormatVehicleName(vehicle.Brand)} {FormatVehicleName(vehicle.Model)}",
                 FontSize = 19,
                 FontAttributes = FontAttributes.Bold,
                 TextColor = Colors.White
             };
 
+            // VEHICLE PRICE
             var priceLabel = new Label
             {
-                Text = $"GH₵ {vehicle.Price}",
+                Text = $"GH₵ {FormatPrice(vehicle.Price)}",
                 FontSize = 18,
                 FontAttributes = FontAttributes.Bold,
                 TextColor = Color.FromArgb("#F6C800")
             };
 
+            // VEHICLE DETAILS
             var detailsLabel = new Label
             {
                 Text = $"{vehicle.Mileage} km • {vehicle.Transmission} • {vehicle.Fuel}",
@@ -90,6 +94,7 @@ public partial class MainPage : ContentPage
                 TextColor = Color.FromArgb("#BBBBBB")
             };
 
+            // VEHICLE LOCATION
             var locationLabel = new Label
             {
                 Text = $"📍 {vehicle.City}, {vehicle.Region}",
@@ -97,16 +102,69 @@ public partial class MainPage : ContentPage
                 TextColor = Color.FromArgb("#BBBBBB")
             };
 
+            // VIEW DETAILS BUTTON
+            var viewDetailsButton = new Button
+            {
+                Text = "View Details",
+                BackgroundColor = Color.FromArgb("#F6C800"),
+                TextColor = Colors.Black,
+                FontAttributes = FontAttributes.Bold,
+                CornerRadius = 10,
+                HeightRequest = 45,
+                Margin = new Thickness(0, 8, 0, 0)
+            };
+
+            // OPEN VEHICLE DETAILS
+            viewDetailsButton.Clicked += async (sender, e) =>
+            {
+                await Navigation.PushAsync(
+                    new VehicleDetailsPage(vehicle));
+            };
+
+            // ADD INFORMATION TO CARD
             information.Children.Add(nameLabel);
             information.Children.Add(priceLabel);
             information.Children.Add(detailsLabel);
             information.Children.Add(locationLabel);
+            information.Children.Add(viewDetailsButton);
 
+            // ADD INFORMATION TO LAYOUT
             layout.Children.Add(information);
 
+            // ADD LAYOUT TO CARD
             vehicleCard.Content = layout;
 
+            // ADD CARD TO HOME PAGE
             SavedVehiclesLayout.Children.Add(vehicleCard);
         }
+    }
+
+    // FORMAT VEHICLE PRICE
+    private string FormatPrice(string price)
+    {
+        if (decimal.TryParse(
+            price.Replace(",", ""),
+            out decimal amount))
+        {
+            return amount.ToString("N0");
+        }
+
+        return price;
+    }
+
+
+    private string FormatVehicleName(string name)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+            return name;
+
+        return string.Join(
+            " ",
+            name
+                .Trim()
+                .Split(' ', StringSplitOptions.RemoveEmptyEntries)
+                .Select(word =>
+                    char.ToUpper(word[0]) +
+                    word.Substring(1).ToLower()));
     }
 }
