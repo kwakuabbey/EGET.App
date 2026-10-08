@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="EGET.App.MessageSellerPage"
+    BackgroundColor="#111111"
+    Title="Message Seller">
+
+    <Grid RowDefinitions="Auto,*,Auto"
+          Padding="20">
+
+        <!-- HEADER -->
+        <VerticalStackLayout Spacing="4">
+
+            <Label
+                Text="Message Seller"
+                FontSize="28"
+                FontAttributes="Bold"
+                TextColor="White" />
+
+            <Label
+                Text="Ask the seller about this vehicle"
+                FontSize="14"
+                TextColor="#BBBBBB" />
+
+        </VerticalStackLayout>
+
+        <!-- MESSAGE AREA -->
+        <ScrollView
+            Grid.Row="1"
+            Margin="0,20,0,20">
+
+            <VerticalStackLayout
+                x:Name="MessagesLayout"
+                Spacing="12">
+
+                <!-- INITIAL SELLER MESSAGE -->
+                <Border
+                    BackgroundColor="#1F1F1F"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 14"
+                    Padding="15"
+                    HorizontalOptions="Start"
+                    MaximumWidthRequest="320">
+
+                    <Label
+                        Text="Hello! How can I help you with this vehicle?"
+                        FontSize="15"
+                        TextColor="White" />
+
+                </Border>
+
+            </VerticalStackLayout>
+
+        </ScrollView>
+
+        <!-- MESSAGE INPUT -->
+        <Grid
+            Grid.Row="2"
+            ColumnDefinitions="*,Auto"
+            ColumnSpacing="10">
+
+            <Border
+                BackgroundColor="#1F1F1F"
+                Stroke="#444444"
+                StrokeThickness="1"
+                StrokeShape="RoundRectangle 14"
+                Padding="12,0">
+
+                <Entry
+                    x:Name="MessageEntry"
+                    Placeholder="Type your message..."
+                    PlaceholderColor="#888888"
+                    TextColor="White"
+                    FontSize="15"
+                    BackgroundColor="Transparent"
+                    VerticalOptions="Center" />
+
+            </Border>
+
+            <Button
+                Grid.Column="1"
+                Text="Send"
+                Clicked="OnSendMessageClicked"
+                BackgroundColor="#F7C900"
+                TextColor="#111111"
+                FontAttributes="Bold"
+                CornerRadius="14"
+                HeightRequest="50"
+                WidthRequest="80" />
+
+        </Grid>
+
+    </Grid>
+
+</ContentPage>
