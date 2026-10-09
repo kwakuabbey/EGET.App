@@ -13,21 +13,65 @@
             Padding="20"
             Spacing="18">
 
-            <!-- Vehicle Image -->
+            <!-- VEHICLE PHOTO GALLERY -->
             <Border
                 BackgroundColor="#1F1F1F"
                 StrokeThickness="0"
                 StrokeShape="RoundRectangle 16">
 
-            <Image
-                x:Name="VehicleImage"
-                Source="corolla1.png"
-                HeightRequest="250"
-                Aspect="AspectFill" />
+                <VerticalStackLayout Spacing="0">
+
+                    <!-- MAIN VEHICLE PHOTO -->
+                    <Image
+                        x:Name="VehicleImage"
+                        Source="corolla1.png"
+                        HeightRequest="280"
+                        Aspect="AspectFill" />
+
+                    <!-- PHOTO COUNTER AND NAVIGATION -->
+                    <Grid
+                        Padding="10"
+                        ColumnDefinitions="Auto,*,Auto"
+                        BackgroundColor="#1F1F1F">
+
+                        <Button
+                            x:Name="PreviousPhotoButton"
+                            Text="❮ Previous"
+                            FontSize="12"
+                            BackgroundColor="#333333"
+                            TextColor="White"
+                            CornerRadius="8"
+                            Padding="8,5"
+                            Clicked="OnPreviousPhotoClicked" />
+
+                        <Label
+                            x:Name="PhotoCounterLabel"
+                            Grid.Column="1"
+                            Text="1 of 1"
+                            FontSize="14"
+                            FontAttributes="Bold"
+                            TextColor="#F7C900"
+                            HorizontalTextAlignment="Center"
+                            VerticalTextAlignment="Center" />
+
+                        <Button
+                            x:Name="NextPhotoButton"
+                            Grid.Column="2"
+                            Text="Next ❯"
+                            FontSize="12"
+                            BackgroundColor="#333333"
+                            TextColor="White"
+                            CornerRadius="8"
+                            Padding="8,5"
+                            Clicked="OnNextPhotoClicked" />
+
+                    </Grid>
+
+                </VerticalStackLayout>
 
             </Border>
 
-            <!-- Vehicle Name -->
+            <!-- VEHICLE NAME -->
             <Label
                 x:Name="VehicleNameLabel"
                 Text="2020 Toyota Corolla"
@@ -35,7 +79,7 @@
                 FontAttributes="Bold"
                 TextColor="White" />
 
-            <!-- Price -->
+            <!-- PRICE -->
             <Label
                 x:Name="VehiclePriceLabel"
                 Text="GH₵ 185,000"
@@ -43,7 +87,7 @@
                 FontAttributes="Bold"
                 TextColor="#F7C900" />
 
-            <!-- Vehicle Information -->
+            <!-- VEHICLE INFORMATION -->
             <Border
                 BackgroundColor="#1F1F1F"
                 StrokeThickness="0"
@@ -89,10 +133,9 @@
                         Grid.Row="1">
 
                         <Label
-                           Text="Fuel"
-                           FontSize="13"
-                           TextColor="#999999" />
-
+                            Text="Fuel"
+                            FontSize="13"
+                            TextColor="#999999" />
 
                         <Label
                             x:Name="VehicleFuelLabel"
@@ -112,7 +155,7 @@
                             TextColor="#999999" />
 
                         <Label
-                             x:Name="VehicleTransmissionLabel"
+                            x:Name="VehicleTransmissionLabel"
                             Text="Automatic"
                             FontSize="16"
                             TextColor="White"
@@ -139,7 +182,7 @@
 
             </Border>
 
-            <!-- Description -->
+            <!-- DESCRIPTION -->
             <Label
                 Text="Description"
                 FontSize="21"
@@ -153,29 +196,29 @@
                 LineHeight="1.4"
                 TextColor="#BBBBBB" />
 
-            <!-- Action Buttons -->
+            <!-- ACTION BUTTONS -->
             <Grid
-                 ColumnDefinitions="*,*"
-                 ColumnSpacing="12"
-                 Margin="0,5,0,20">
+                ColumnDefinitions="*,*"
+                ColumnSpacing="12"
+                Margin="0,5,0,20">
 
                 <Button
-                   Text="♡ Save"
-                   BackgroundColor="#222222"
-                   TextColor="White"
-                   CornerRadius="12"
-                   HeightRequest="52"
-                   Clicked="OnSaveFavouriteClicked" />
+                    Text="♡ Save"
+                    BackgroundColor="#222222"
+                    TextColor="White"
+                    CornerRadius="12"
+                    HeightRequest="52"
+                    Clicked="OnSaveFavouriteClicked" />
 
                 <Button
-                   Grid.Column="1"
-                   Text="Contact Seller"
-                   BackgroundColor="#F7C900"
-                   TextColor="#111111"
-                   FontAttributes="Bold"
-                   CornerRadius="12"
-                   HeightRequest="52"
-                   Clicked="OnContactSellerClicked" />
+                    Grid.Column="1"
+                    Text="Contact Seller"
+                    BackgroundColor="#F7C900"
+                    TextColor="#111111"
+                    FontAttributes="Bold"
+                    CornerRadius="12"
+                    HeightRequest="52"
+                    Clicked="OnContactSellerClicked" />
 
             </Grid>
 
