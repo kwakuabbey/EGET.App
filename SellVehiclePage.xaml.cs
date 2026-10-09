@@ -12,23 +12,46 @@ public partial class SellVehiclePage : ContentPage
     // ADD VEHICLE PHOTOS
     private async void OnAddPhotosTapped(object sender, TappedEventArgs e)
     {
-        var photos = await MediaPicker.Default.PickPhotosAsync();
-
-        if (photos == null)
-            return;
-
-        PhotoPreviewLayout.Children.Clear();
-        selectedPhotoPaths.Clear();
-
-        foreach (var photo in photos)
+        try
         {
-            selectedPhotoPaths.Add(photo.FullPath);
-            AddPhotoPreview(photo.FullPath);
+            var photos = await MediaPicker.Default.PickPhotosAsync();
+
+            if (photos == null || photos.Count == 0)
+                return;
+
+            // Add new photos without removing previously selected photos.
+            foreach (var photo in photos)
+            {
+                if (!selectedPhotoPaths.Contains(photo.FullPath))
+                {
+                    selectedPhotoPaths.Add(photo.FullPath);
+                }
+            }
+
+            RefreshPhotoPreviews();
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert(
+                "Photo Selection",
+                $"Unable to select photos: {ex.Message}",
+                "OK");
+        }
+    }
+
+    // REFRESH ALL PHOTO PREVIEWS
+    private void RefreshPhotoPreviews()
+    {
+        PhotoPreviewLayout.Children.Clear();
+
+        for (int i = 0; i < selectedPhotoPaths.Count; i++)
+        {
+            AddPhotoPreview(selectedPhotoPaths[i], i);
         }
     }
 
     // CREATE PHOTO PREVIEW
-    private void AddPhotoPreview(string photoPath)
+    private void AddPhotoPreview(string photoPath, int index)
     {
         // PHOTO IMAGE
         var image = new Image
@@ -46,21 +69,27 @@ public partial class SellVehiclePage : ContentPage
             HeightRequest = 120,
             StrokeThickness = 1,
             Stroke = Color.FromArgb("#F6C800"),
-            StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle
-            {
-                CornerRadius = new CornerRadius(12)
-            },
+            StrokeShape =
+                new Microsoft.Maui.Controls.Shapes.RoundRectangle
+                {
+                    CornerRadius = new CornerRadius(12)
+                },
             Content = image
         };
 
         // PHOTO CONTAINER
         var photoContainer = new Grid
         {
-            WidthRequest = 120,
-            HeightRequest = 120
+            WidthRequest = 130,
+            RowDefinitions =
+            {
+                new RowDefinition { Height = 120 },
+                new RowDefinition { Height = GridLength.Auto }
+            }
         };
 
         photoContainer.Children.Add(imageFrame);
+        Grid.SetRow(imageFrame, 0);
 
         // REMOVE BUTTON
         var removeButton = new Button
@@ -81,17 +110,107 @@ public partial class SellVehiclePage : ContentPage
         // REMOVE PHOTO
         removeButton.Clicked += (sender, e) =>
         {
-            PhotoPreviewLayout.Children.Remove(photoContainer);
             selectedPhotoPaths.Remove(photoPath);
+            RefreshPhotoPreviews();
         };
 
         photoContainer.Children.Add(removeButton);
+        Grid.SetRow(removeButton, 0);
+
+        // PHOTO ORDER CONTROLS
+        var controls = new VerticalStackLayout
+        {
+            Spacing = 4,
+            Padding = new Thickness(0, 6, 0, 0)
+        };
+
+        // MAIN PHOTO LABEL
+        if (index == 0)
+        {
+            controls.Children.Add(new Label
+            {
+                Text = "★ MAIN PHOTO",
+                FontSize = 11,
+                FontAttributes = FontAttributes.Bold,
+                TextColor = Color.FromArgb("#F6C800"),
+                HorizontalTextAlignment = TextAlignment.Center
+            });
+        }
+        else
+        {
+            controls.Children.Add(new Label
+            {
+                Text = $"Photo {index + 1}",
+                FontSize = 11,
+                TextColor = Colors.White,
+                HorizontalTextAlignment = TextAlignment.Center
+            });
+        }
+
+        // MOVE UP BUTTON
+        var moveUpButton = new Button
+        {
+            Text = "↑ Move Up",
+            FontSize = 11,
+            Padding = new Thickness(2),
+            HeightRequest = 34,
+            BackgroundColor = Color.FromArgb("#333333"),
+            TextColor = Colors.White,
+            IsEnabled = index > 0
+        };
+
+        moveUpButton.Clicked += (sender, e) =>
+        {
+            MovePhoto(index, -1);
+        };
+
+        controls.Children.Add(moveUpButton);
+
+        // MOVE DOWN BUTTON
+        var moveDownButton = new Button
+        {
+            Text = "↓ Move Down",
+            FontSize = 11,
+            Padding = new Thickness(2),
+            HeightRequest = 34,
+            BackgroundColor = Color.FromArgb("#333333"),
+            TextColor = Colors.White,
+            IsEnabled = index < selectedPhotoPaths.Count - 1
+        };
+
+        moveDownButton.Clicked += (sender, e) =>
+        {
+            MovePhoto(index, 1);
+        };
+
+        controls.Children.Add(moveDownButton);
+
+        photoContainer.Children.Add(controls);
+        Grid.SetRow(controls, 1);
 
         PhotoPreviewLayout.Children.Add(photoContainer);
     }
 
+    // MOVE A PHOTO UP OR DOWN
+    private void MovePhoto(int currentIndex, int direction)
+    {
+        int newIndex = currentIndex + direction;
+
+        if (newIndex < 0 || newIndex >= selectedPhotoPaths.Count)
+            return;
+
+        // Swap the positions of the selected photos.
+        (selectedPhotoPaths[currentIndex], selectedPhotoPaths[newIndex]) =
+            (selectedPhotoPaths[newIndex], selectedPhotoPaths[currentIndex]);
+
+        // Refresh the previews to display the new order.
+        RefreshPhotoPreviews();
+    }
+
     // CREATE VEHICLE LISTING
-    private async void OnCreateVehicleListingClicked(object sender, EventArgs e)
+    private async void OnCreateVehicleListingClicked(
+        object sender,
+        EventArgs e)
     {
         // CHECK BRAND
         if (string.IsNullOrWhiteSpace(BrandEntry.Text))
@@ -220,7 +339,10 @@ public partial class SellVehiclePage : ContentPage
             Transmission = TransmissionPicker.SelectedItem?.ToString() ?? "",
             City = CityEntry.Text?.Trim() ?? "",
             Region = RegionEntry.Text?.Trim() ?? "",
-            Description = DescriptionEditor.Text?.Trim() ?? "",
+            Description = description,
+
+            // Preserve the selected photo order.
+            // The first photo is the intended main photo.
             PhotoPaths = new List<string>(selectedPhotoPaths)
         };
 

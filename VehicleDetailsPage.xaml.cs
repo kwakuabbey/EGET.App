@@ -112,7 +112,24 @@ public partial class VehicleDetailsPage : ContentPage
     // CONTACT SELLER
     private async void OnContactSellerClicked(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync(nameof(MessageSellerPage));
+        if (selectedVehicle == null)
+        {
+            await DisplayAlertAsync(
+                "Contact Seller",
+                "Messaging for this vehicle is not connected yet.",
+                "OK");
+
+            return;
+        }
+
+        var navigationParameters = new Dictionary<string, object>
+    {
+        { "SelectedVehicle", selectedVehicle }
+    };
+
+        await Shell.Current.GoToAsync(
+            nameof(MessageSellerPage),
+            navigationParameters);
     }
 }
   

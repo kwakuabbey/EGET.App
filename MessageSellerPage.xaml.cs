@@ -1,18 +1,149 @@
 namespace EGET.App;
 
+[QueryProperty(nameof(SelectedVehicle), "SelectedVehicle")]
 public partial class MessageSellerPage : ContentPage
 {
+    private Vehicle? selectedVehicle;
+    private string vehicleKey = string.Empty;
+
+    public Vehicle? SelectedVehicle
+    {
+        get => selectedVehicle;
+
+        set
+        {
+            selectedVehicle = value;
+
+            if (selectedVehicle != null)
+            {
+                vehicleKey = GenerateVehicleKey(selectedVehicle);
+
+                Title = $"{selectedVehicle.Brand} {selectedVehicle.Model}";
+
+                LoadMessages();
+            }
+        }
+    }
+
     public MessageSellerPage()
     {
         InitializeComponent();
     }
 
-    // SEND MESSAGE
-    private async void OnSendMessageClicked(object sender, EventArgs e)
+    // GENERATE A CONVERSATION KEY FOR EACH VEHICLE
+    private string GenerateVehicleKey(Vehicle vehicle)
     {
-        string message = MessageEntry.Text?.Trim() ?? "";
+        return $"{vehicle.Brand.Trim().ToLowerInvariant()}_" +
+               $"{vehicle.Model.Trim().ToLowerInvariant()}_" +
+               $"{vehicle.Year.Trim()}_" +
+               $"{vehicle.Price.Trim()}";
+    }
 
-        if (string.IsNullOrWhiteSpace(message))
+    // LOAD PREVIOUS MESSAGES
+    private void LoadMessages()
+    {
+        MessagesLayout.Children.Clear();
+
+        var messages = MessageStorage.GetMessages(vehicleKey);
+
+        if (messages.Count == 0)
+        {
+            AddSellerMessage(
+                "Hello! How can I help you with this vehicle?");
+
+            return;
+        }
+
+        foreach (var message in messages)
+        {
+            AddMessageBubble(message);
+        }
+    }
+
+    // DISPLAY SELLER GREETING
+    private void AddSellerMessage(string text)
+    {
+        var messageBubble = new Border
+        {
+            BackgroundColor = Color.FromArgb("#1F1F1F"),
+            StrokeThickness = 0,
+            StrokeShape =
+                new Microsoft.Maui.Controls.Shapes.RoundRectangle
+                {
+                    CornerRadius = new CornerRadius(14)
+                },
+            Padding = 15,
+            HorizontalOptions = LayoutOptions.Start,
+            MaximumWidthRequest = 320
+        };
+
+        messageBubble.Content = new Label
+        {
+            Text = text,
+            FontSize = 15,
+            TextColor = Colors.White
+        };
+
+        MessagesLayout.Children.Add(messageBubble);
+    }
+
+    // DISPLAY A SAVED MESSAGE
+    private void AddMessageBubble(Message message)
+    {
+        var messageBubble = new Border
+        {
+            BackgroundColor = message.IsFromBuyer
+                ? Color.FromArgb("#F7C900")
+                : Color.FromArgb("#1F1F1F"),
+
+            StrokeThickness = 0,
+
+            StrokeShape =
+                new Microsoft.Maui.Controls.Shapes.RoundRectangle
+                {
+                    CornerRadius = new CornerRadius(14)
+                },
+
+            Padding = 15,
+
+            HorizontalOptions = message.IsFromBuyer
+                ? LayoutOptions.End
+                : LayoutOptions.Start,
+
+            MaximumWidthRequest = 320
+        };
+
+        messageBubble.Content = new Label
+        {
+            Text = message.Text,
+            FontSize = 15,
+            TextColor = message.IsFromBuyer
+                ? Color.FromArgb("#111111")
+                : Colors.White
+        };
+
+        MessagesLayout.Children.Add(messageBubble);
+    }
+
+    // SEND AND SAVE MESSAGE
+    private async void OnSendMessageClicked(
+        object sender,
+        EventArgs e)
+    {
+        if (selectedVehicle == null ||
+            string.IsNullOrWhiteSpace(vehicleKey))
+        {
+            await DisplayAlert(
+                "Conversation Unavailable",
+                "Please open Contact Seller from a vehicle listing.",
+                "OK");
+
+            return;
+        }
+
+        string messageText = MessageEntry.Text?.Trim() ?? "";
+
+        if (string.IsNullOrWhiteSpace(messageText))
         {
             await DisplayAlert(
                 "Message",
@@ -22,40 +153,18 @@ public partial class MessageSellerPage : ContentPage
             return;
         }
 
-        // CREATE BUYER MESSAGE
-        var messageBubble = new Border
+        var message = new Message
         {
-            BackgroundColor = Color.FromArgb("#F7C900"),
-            StrokeThickness = 0,
-            StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle
-            {
-                CornerRadius = new CornerRadius(14)
-            },
-            Padding = 15,
-            HorizontalOptions = LayoutOptions.End,
-            MaximumWidthRequest = 320
+            VehicleKey = vehicleKey,
+            Text = messageText,
+            IsFromBuyer = true,
+            SentAt = DateTime.Now
         };
 
-        var messageLabel = new Label
-        {
-            Text = message,
-            FontSize = 15,
-            TextColor = Color.FromArgb("#111111")
-        };
+        MessageStorage.AddMessage(message);
 
-        messageBubble.Content = messageLabel;
+        AddMessageBubble(message);
 
-        MessagesLayout.Children.Add(messageBubble);
-
-        // CLEAR MESSAGE BOX
         MessageEntry.Text = "";
-
-        // MOVE TO THE LATEST MESSAGE
-        await Task.Delay(100);
-
-        await DisplayAlert(
-            "Message Sent",
-            "Your message has been sent to the seller.",
-            "OK");
     }
 }

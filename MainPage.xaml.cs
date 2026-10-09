@@ -9,6 +9,14 @@ public partial class MainPage : ContentPage
         LoadSavedVehicles();
     }
 
+    // REFRESH VEHICLES WHEN THE HOME PAGE APPEARS
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+
+        LoadSavedVehicles();
+    }
+
     private async void OnBuyCarTapped(object sender, TappedEventArgs e)
     {
         await Shell.Current.GoToAsync(nameof(BrowsePage));
@@ -27,6 +35,7 @@ public partial class MainPage : ContentPage
     // LOAD SAVED VEHICLES
     private void LoadSavedVehicles()
     {
+        // Clear existing cards before reloading.
         SavedVehiclesLayout.Children.Clear();
 
         var vehicles = VehicleStorage.GetVehicles();
@@ -49,7 +58,8 @@ public partial class MainPage : ContentPage
             };
 
             // VEHICLE PHOTO
-            if (vehicle.PhotoPaths.Count > 0)
+            if (vehicle.PhotoPaths != null &&
+                vehicle.PhotoPaths.Count > 0)
             {
                 var image = new Image
                 {
@@ -152,7 +162,7 @@ public partial class MainPage : ContentPage
         return price;
     }
 
-
+    // FORMAT VEHICLE NAME
     private string FormatVehicleName(string name)
     {
         if (string.IsNullOrWhiteSpace(name))
