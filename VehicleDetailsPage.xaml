@@ -196,29 +196,56 @@
                 LineHeight="1.4"
                 TextColor="#BBBBBB" />
 
-            <!-- ACTION BUTTONS -->
+            <!-- BUYER ACTION BUTTONS -->
             <Grid
-                ColumnDefinitions="*,*"
-                ColumnSpacing="12"
-                Margin="0,5,0,20">
+    ColumnDefinitions="*,*"
+    ColumnSpacing="12"
+    Margin="0,5,0,0">
 
                 <Button
-                    Text="♡ Save"
-                    BackgroundColor="#222222"
-                    TextColor="White"
-                    CornerRadius="12"
-                    HeightRequest="52"
-                    Clicked="OnSaveFavouriteClicked" />
+        Text="♡ Save"
+        BackgroundColor="#222222"
+        TextColor="White"
+        CornerRadius="12"
+        HeightRequest="52"
+        Clicked="OnSaveFavouriteClicked" />
 
                 <Button
-                    Grid.Column="1"
-                    Text="Contact Seller"
-                    BackgroundColor="#F7C900"
-                    TextColor="#111111"
-                    FontAttributes="Bold"
-                    CornerRadius="12"
-                    HeightRequest="52"
-                    Clicked="OnContactSellerClicked" />
+        Grid.Column="1"
+        Text="Contact Seller"
+        BackgroundColor="#F7C900"
+        TextColor="#111111"
+        FontAttributes="Bold"
+        CornerRadius="12"
+        HeightRequest="52"
+        Clicked="OnContactSellerClicked" />
+
+            </Grid>
+
+            <!-- SELLER MANAGEMENT BUTTONS -->
+            <Grid
+    ColumnDefinitions="*,*"
+    ColumnSpacing="12"
+    Margin="0,0,0,20">
+
+                <Button
+        Text="✏️ Edit Listing"
+        BackgroundColor="#333333"
+        TextColor="White"
+        FontAttributes="Bold"
+        CornerRadius="12"
+        HeightRequest="48"
+        Clicked="OnEditListingClicked" />
+
+                <Button
+        Grid.Column="1"
+        Text="🗑️ Delete Listing"
+        BackgroundColor="#8B0000"
+        TextColor="White"
+        FontAttributes="Bold"
+        CornerRadius="12"
+        HeightRequest="48"
+        Clicked="OnDeleteListingClicked" />
 
             </Grid>
 

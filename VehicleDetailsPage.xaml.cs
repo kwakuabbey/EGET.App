@@ -10,12 +10,35 @@ public partial class VehicleDetailsPage : ContentPage
     // TRACK THE CURRENT PHOTO
     private int currentPhotoIndex = 0;
 
+    // AUTOMATICALLY REFRESH VEHICLE DETAILS WHEN THE PAGE REAPPEARS
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+
+        if (selectedVehicle == null)
+        {
+            return;
+        }
+
+        // Find the latest saved version of this vehicle.
+        var savedVehicle = VehicleStorage.GetVehicles()
+            .FirstOrDefault(vehicle =>
+                vehicle.Id == selectedVehicle.Id);
+
+        if (savedVehicle != null)
+        {
+            selectedVehicle = savedVehicle;
+
+            // Refresh all displayed information and photos.
+            DisplayVehicle(savedVehicle);
+        }
+    }
+
     // EXISTING COROLLA DETAILS PAGE
     public VehicleDetailsPage()
     {
         InitializeComponent();
 
-        // DISPLAY THE DEFAULT COROLLA IMAGE
         vehiclePhotoPaths = new List<string>
         {
             "corolla1.png"
@@ -34,6 +57,30 @@ public partial class VehicleDetailsPage : ContentPage
         selectedVehicle = vehicle;
 
         DisplayVehicle(vehicle);
+    }
+
+    // RELOAD THE LATEST SAVED VEHICLE
+    private bool RefreshSavedVehicle()
+    {
+        if (selectedVehicle == null)
+        {
+            return false;
+        }
+
+        var savedVehicle = VehicleStorage.GetVehicles()
+            .FirstOrDefault(vehicle =>
+                vehicle.Id == selectedVehicle.Id);
+
+        if (savedVehicle == null)
+        {
+            return false;
+        }
+
+        selectedVehicle = savedVehicle;
+
+        DisplayVehicle(savedVehicle);
+
+        return true;
     }
 
     // DISPLAY VEHICLE INFORMATION
@@ -79,7 +126,6 @@ public partial class VehicleDetailsPage : ContentPage
     // UPDATE THE DISPLAYED PHOTO AND CONTROLS
     private void UpdatePhotoGallery()
     {
-        // HANDLE A VEHICLE WITH NO PHOTOS
         if (vehiclePhotoPaths.Count == 0)
         {
             VehicleImage.Source = "corolla1.png";
@@ -163,13 +209,17 @@ public partial class VehicleDetailsPage : ContentPage
     private string FormatVehicleName(string name)
     {
         if (string.IsNullOrWhiteSpace(name))
+        {
             return name;
+        }
 
         return string.Join(
             " ",
             name
                 .Trim()
-                .Split(' ', StringSplitOptions.RemoveEmptyEntries)
+                .Split(
+                    ' ',
+                    StringSplitOptions.RemoveEmptyEntries)
                 .Select(word =>
                     char.ToUpper(word[0]) +
                     word.Substring(1).ToLower()));
@@ -182,13 +232,20 @@ public partial class VehicleDetailsPage : ContentPage
     {
         if (selectedVehicle != null)
         {
-            FavouriteVehicleStorage.AddFavourite(
-                selectedVehicle);
+            RefreshSavedVehicle();
 
-            await DisplayAlertAsync(
-                "Favourite",
-                $"{FormatVehicleName(selectedVehicle.Brand)} {FormatVehicleName(selectedVehicle.Model)} has been saved to your favourites.",
-                "OK");
+            if (selectedVehicle != null)
+            {
+                FavouriteVehicleStorage.AddFavourite(
+                    selectedVehicle);
+
+                await DisplayAlertAsync(
+                    "Favourite",
+                    $"{FormatVehicleName(selectedVehicle.Brand)} " +
+                    $"{FormatVehicleName(selectedVehicle.Model)} " +
+                    "has been saved to your favourites.",
+                    "OK");
+            }
 
             return;
         }
@@ -215,6 +272,8 @@ public partial class VehicleDetailsPage : ContentPage
             return;
         }
 
+        RefreshSavedVehicle();
+
         var navigationParameters =
             new Dictionary<string, object>
             {
@@ -224,5 +283,90 @@ public partial class VehicleDetailsPage : ContentPage
         await Shell.Current.GoToAsync(
             nameof(MessageSellerPage),
             navigationParameters);
+    }
+
+    // EDIT VEHICLE LISTING
+    private async void OnEditListingClicked(
+        object sender,
+        EventArgs e)
+    {
+        if (selectedVehicle == null)
+        {
+            await DisplayAlertAsync(
+                "Edit Listing",
+                "This vehicle cannot be edited from the current page.",
+                "OK");
+
+            return;
+        }
+
+        // SAVE THE VEHICLE ID BEFORE OPENING THE EDIT PAGE
+        string vehicleId = selectedVehicle.Id;
+
+        // OPEN THE EDIT PAGE
+        await Navigation.PushAsync(
+            new EditVehiclePage(selectedVehicle));
+
+        // RELOAD THE VEHICLE AFTER RETURNING FROM EDITING
+        var savedVehicle = VehicleStorage.GetVehicles()
+            .FirstOrDefault(vehicle =>
+                vehicle.Id == vehicleId);
+
+        if (savedVehicle != null)
+        {
+            selectedVehicle = savedVehicle;
+
+            DisplayVehicle(savedVehicle);
+        }
+    }
+
+    // DELETE VEHICLE LISTING
+    private async void OnDeleteListingClicked(
+        object sender,
+        EventArgs e)
+    {
+        if (selectedVehicle == null)
+        {
+            await DisplayAlertAsync(
+                "Delete Listing",
+                "This vehicle cannot be deleted from the current page.",
+                "OK");
+
+            return;
+        }
+
+        bool confirm = await DisplayAlertAsync(
+            "Delete Listing",
+            $"Are you sure you want to delete the " +
+            $"{selectedVehicle.Year} " +
+            $"{selectedVehicle.Brand} " +
+            $"{selectedVehicle.Model} listing?",
+            "Delete",
+            "Cancel");
+
+        if (!confirm)
+        {
+            return;
+        }
+
+        bool deleted = VehicleStorage.DeleteVehicle(
+            selectedVehicle.Id);
+
+        if (!deleted)
+        {
+            await DisplayAlertAsync(
+                "Delete Failed",
+                "The listing could not be found or deleted.",
+                "OK");
+
+            return;
+        }
+
+        await DisplayAlertAsync(
+            "Listing Deleted",
+            "The vehicle listing has been deleted successfully.",
+            "OK");
+
+        await Navigation.PopAsync();
     }
 }

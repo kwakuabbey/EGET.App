@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    x:Class="EGET.App.EditVehiclePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Edit Vehicle Listing"
+    BackgroundColor="#F5F5F5">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="16">
+
+            <Label
+                Text="Edit Your Listing"
+                FontSize="27"
+                FontAttributes="Bold"
+                TextColor="#111111" />
+
+            <Label
+                Text="Update your vehicle details and photos."
+                FontSize="14"
+                TextColor="#666666" />
+
+            <!-- VEHICLE DETAILS -->
+
+            <VerticalStackLayout Spacing="12">
+
+                <Label
+                    Text="Vehicle Details"
+                    FontSize="19"
+                    FontAttributes="Bold"
+                    TextColor="#111111" />
+
+                <Entry
+                    x:Name="BrandEntry"
+                    Placeholder="Vehicle brand"
+                    TextColor="#111111" />
+
+                <Entry
+                    x:Name="ModelEntry"
+                    Placeholder="Vehicle model"
+                    TextColor="#111111" />
+
+                <Entry
+                    x:Name="YearEntry"
+                    Placeholder="Year"
+                    Keyboard="Numeric"
+                    TextColor="#111111" />
+
+                <Entry
+                    x:Name="PriceEntry"
+                    Placeholder="Price in GH₵"
+                    Keyboard="Numeric"
+                    TextColor="#111111" />
+
+                <Entry
+                    x:Name="MileageEntry"
+                    Placeholder="Mileage in kilometres"
+                    Keyboard="Numeric"
+                    TextColor="#111111" />
+
+                <Label
+                    Text="Fuel Type"
+                    FontAttributes="Bold"
+                    TextColor="#333333" />
+
+                <Picker
+                    x:Name="FuelPicker"
+                    Title="Select fuel type"
+                    TextColor="#111111">
+
+                    <Picker.Items>
+                        <x:String>Petrol</x:String>
+                        <x:String>Diesel</x:String>
+                        <x:String>Hybrid</x:String>
+                        <x:String>Electric</x:String>
+                    </Picker.Items>
+
+                </Picker>
+
+                <Label
+                    Text="Transmission"
+                    FontAttributes="Bold"
+                    TextColor="#333333" />
+
+                <Picker
+                    x:Name="TransmissionPicker"
+                    Title="Select transmission"
+                    TextColor="#111111">
+
+                    <Picker.Items>
+                        <x:String>Automatic</x:String>
+                        <x:String>Manual</x:String>
+                    </Picker.Items>
+
+                </Picker>
+
+                <Entry
+                    x:Name="CityEntry"
+                    Placeholder="City"
+                    TextColor="#111111" />
+
+                <Entry
+                    x:Name="RegionEntry"
+                    Placeholder="Region"
+                    TextColor="#111111" />
+
+                <Label
+                    Text="Description"
+                    FontAttributes="Bold"
+                    TextColor="#333333" />
+
+                <Editor
+                    x:Name="DescriptionEditor"
+                    Placeholder="Describe the vehicle..."
+                    AutoSize="TextChanges"
+                    MinimumHeightRequest="120"
+                    TextColor="#111111" />
+
+            </VerticalStackLayout>
+
+            <!-- VEHICLE PHOTOS -->
+
+            <BoxView
+                HeightRequest="1"
+                BackgroundColor="#DDDDDD" />
+
+            <Label
+                Text="Vehicle Photos"
+                FontSize="19"
+                FontAttributes="Bold"
+                TextColor="#111111" />
+
+            <Label
+                Text="Keep at least five photos. The first photo is your main listing photo."
+                FontSize="13"
+                TextColor="#666666" />
+
+            <Button
+                Text="+ Add More Photos"
+                BackgroundColor="#F7C900"
+                TextColor="#111111"
+                FontAttributes="Bold"
+                CornerRadius="12"
+                HeightRequest="48"
+                Clicked="OnAddPhotosTapped" />
+
+            <ScrollView
+                Orientation="Horizontal"
+                HorizontalScrollBarVisibility="Always">
+
+                <HorizontalStackLayout
+                    x:Name="PhotoPreviewLayout"
+                    Spacing="12"
+                    Padding="0,8" />
+
+            </ScrollView>
+
+            <Label
+                x:Name="PhotoCountLabel"
+                Text="0 photos selected"
+                FontSize="13"
+                TextColor="#555555" />
+
+            <!-- SAVE CHANGES -->
+
+            <Button
+                x:Name="SaveChangesButton"
+                Text="SAVE CHANGES"
+                BackgroundColor="#F7C900"
+                TextColor="#111111"
+                FontAttributes="Bold"
+                FontSize="16"
+                CornerRadius="12"
+                HeightRequest="54"
+                Clicked="OnSaveChangesClicked" />
+
+            <Button
+                Text="CANCEL"
+                BackgroundColor="#222222"
+                TextColor="White"
+                FontAttributes="Bold"
+                CornerRadius="12"
+                HeightRequest="48"
+                Clicked="OnCancelClicked" />
+
+            <Label
+                Text="EGET — Your Vehicle Marketplace"
+                FontSize="12"
+                TextColor="#888888"
+                HorizontalTextAlignment="Center"
+                Margin="0,0,0,15" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

@@ -2,6 +2,7 @@ namespace EGET.App;
 
 public partial class SellVehiclePage : ContentPage
 {
+    // STORE SELECTED PHOTO PATHS IN DISPLAY ORDER
     private readonly List<string> selectedPhotoPaths = new();
 
     public SellVehiclePage()
@@ -10,7 +11,9 @@ public partial class SellVehiclePage : ContentPage
     }
 
     // ADD VEHICLE PHOTOS
-    private async void OnAddPhotosTapped(object sender, TappedEventArgs e)
+    private async void OnAddPhotosTapped(
+        object sender,
+        TappedEventArgs e)
     {
         try
         {
@@ -19,9 +22,11 @@ public partial class SellVehiclePage : ContentPage
             if (photos == null || photos.Count == 0)
                 return;
 
-            // Add new photos without removing previously selected photos.
             foreach (var photo in photos)
             {
+                if (string.IsNullOrWhiteSpace(photo.FullPath))
+                    continue;
+
                 if (!selectedPhotoPaths.Contains(photo.FullPath))
                 {
                     selectedPhotoPaths.Add(photo.FullPath);
@@ -53,7 +58,6 @@ public partial class SellVehiclePage : ContentPage
     // CREATE PHOTO PREVIEW
     private void AddPhotoPreview(string photoPath, int index)
     {
-        // PHOTO IMAGE
         var image = new Image
         {
             Source = ImageSource.FromFile(photoPath),
@@ -62,7 +66,6 @@ public partial class SellVehiclePage : ContentPage
             Aspect = Aspect.AspectFill
         };
 
-        // PHOTO FRAME
         var imageFrame = new Border
         {
             WidthRequest = 120,
@@ -77,7 +80,6 @@ public partial class SellVehiclePage : ContentPage
             Content = image
         };
 
-        // PHOTO CONTAINER
         var photoContainer = new Grid
         {
             WidthRequest = 130,
@@ -91,7 +93,7 @@ public partial class SellVehiclePage : ContentPage
         photoContainer.Children.Add(imageFrame);
         Grid.SetRow(imageFrame, 0);
 
-        // REMOVE BUTTON
+        // REMOVE PHOTO BUTTON
         var removeButton = new Button
         {
             Text = "×",
@@ -107,7 +109,6 @@ public partial class SellVehiclePage : ContentPage
             VerticalOptions = LayoutOptions.Start
         };
 
-        // REMOVE PHOTO
         removeButton.Clicked += (sender, e) =>
         {
             selectedPhotoPaths.Remove(photoPath);
@@ -117,14 +118,13 @@ public partial class SellVehiclePage : ContentPage
         photoContainer.Children.Add(removeButton);
         Grid.SetRow(removeButton, 0);
 
-        // PHOTO ORDER CONTROLS
         var controls = new VerticalStackLayout
         {
             Spacing = 4,
             Padding = new Thickness(0, 6, 0, 0)
         };
 
-        // MAIN PHOTO LABEL
+        // IDENTIFY THE MAIN PHOTO
         if (index == 0)
         {
             controls.Children.Add(new Label
@@ -147,7 +147,7 @@ public partial class SellVehiclePage : ContentPage
             });
         }
 
-        // MOVE UP BUTTON
+        // MOVE PHOTO UP
         var moveUpButton = new Button
         {
             Text = "↑ Move Up",
@@ -166,7 +166,7 @@ public partial class SellVehiclePage : ContentPage
 
         controls.Children.Add(moveUpButton);
 
-        // MOVE DOWN BUTTON
+        // MOVE PHOTO DOWN
         var moveDownButton = new Button
         {
             Text = "↓ Move Down",
@@ -196,14 +196,23 @@ public partial class SellVehiclePage : ContentPage
     {
         int newIndex = currentIndex + direction;
 
-        if (newIndex < 0 || newIndex >= selectedPhotoPaths.Count)
+        if (currentIndex < 0 ||
+            currentIndex >= selectedPhotoPaths.Count ||
+            newIndex < 0 ||
+            newIndex >= selectedPhotoPaths.Count)
+        {
             return;
+        }
 
-        // Swap the positions of the selected photos.
-        (selectedPhotoPaths[currentIndex], selectedPhotoPaths[newIndex]) =
-            (selectedPhotoPaths[newIndex], selectedPhotoPaths[currentIndex]);
+        // SWAP THE PHOTO POSITIONS
+        (
+            selectedPhotoPaths[currentIndex],
+            selectedPhotoPaths[newIndex]
+        ) = (
+            selectedPhotoPaths[newIndex],
+            selectedPhotoPaths[currentIndex]
+        );
 
-        // Refresh the previews to display the new order.
         RefreshPhotoPreviews();
     }
 
@@ -212,8 +221,26 @@ public partial class SellVehiclePage : ContentPage
         object sender,
         EventArgs e)
     {
-        // CHECK BRAND
-        if (string.IsNullOrWhiteSpace(BrandEntry.Text))
+        string brand = BrandEntry.Text?.Trim() ?? string.Empty;
+        string model = ModelEntry.Text?.Trim() ?? string.Empty;
+        string year = YearEntry.Text?.Trim() ?? string.Empty;
+        string price = PriceEntry.Text?.Trim() ?? string.Empty;
+        string mileage = MileageEntry.Text?.Trim() ?? string.Empty;
+
+        string fuel =
+            FuelPicker.SelectedItem?.ToString() ?? string.Empty;
+
+        string transmission =
+            TransmissionPicker.SelectedItem?.ToString() ?? string.Empty;
+
+        string city = CityEntry.Text?.Trim() ?? string.Empty;
+        string region = RegionEntry.Text?.Trim() ?? string.Empty;
+
+        string description =
+            DescriptionEditor.Text?.Trim() ?? string.Empty;
+
+        // VALIDATE REQUIRED FIELDS
+        if (string.IsNullOrWhiteSpace(brand))
         {
             await DisplayAlert(
                 "Missing Information",
@@ -224,8 +251,7 @@ public partial class SellVehiclePage : ContentPage
             return;
         }
 
-        // CHECK MODEL
-        if (string.IsNullOrWhiteSpace(ModelEntry.Text))
+        if (string.IsNullOrWhiteSpace(model))
         {
             await DisplayAlert(
                 "Missing Information",
@@ -236,8 +262,7 @@ public partial class SellVehiclePage : ContentPage
             return;
         }
 
-        // CHECK YEAR
-        if (string.IsNullOrWhiteSpace(YearEntry.Text))
+        if (string.IsNullOrWhiteSpace(year))
         {
             await DisplayAlert(
                 "Missing Information",
@@ -248,8 +273,7 @@ public partial class SellVehiclePage : ContentPage
             return;
         }
 
-        // CHECK PRICE
-        if (string.IsNullOrWhiteSpace(PriceEntry.Text))
+        if (string.IsNullOrWhiteSpace(price))
         {
             await DisplayAlert(
                 "Missing Information",
@@ -260,8 +284,7 @@ public partial class SellVehiclePage : ContentPage
             return;
         }
 
-        // CHECK MILEAGE
-        if (string.IsNullOrWhiteSpace(MileageEntry.Text))
+        if (string.IsNullOrWhiteSpace(mileage))
         {
             await DisplayAlert(
                 "Missing Information",
@@ -272,8 +295,27 @@ public partial class SellVehiclePage : ContentPage
             return;
         }
 
-        // CHECK CITY
-        if (string.IsNullOrWhiteSpace(CityEntry.Text))
+        if (string.IsNullOrWhiteSpace(fuel))
+        {
+            await DisplayAlert(
+                "Missing Information",
+                "Please select the vehicle fuel type.",
+                "OK");
+
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(transmission))
+        {
+            await DisplayAlert(
+                "Missing Information",
+                "Please select the transmission type.",
+                "OK");
+
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(city))
         {
             await DisplayAlert(
                 "Missing Information",
@@ -284,8 +326,7 @@ public partial class SellVehiclePage : ContentPage
             return;
         }
 
-        // CHECK REGION
-        if (string.IsNullOrWhiteSpace(RegionEntry.Text))
+        if (string.IsNullOrWhiteSpace(region))
         {
             await DisplayAlert(
                 "Missing Information",
@@ -296,9 +337,7 @@ public partial class SellVehiclePage : ContentPage
             return;
         }
 
-        // CHECK DESCRIPTION
-        string description = DescriptionEditor.Text?.Trim() ?? "";
-
+        // VALIDATE DESCRIPTION
         int wordCount = description
             .Split(
                 new[] { ' ', '\r', '\n', '\t' },
@@ -308,51 +347,65 @@ public partial class SellVehiclePage : ContentPage
         if (wordCount < 5)
         {
             await DisplayAlert(
-                "Missing Information",
-                "Please provide a vehicle description with at least 5 words.",
+                "Description Too Short",
+                "Please provide a vehicle description with at least five words.",
                 "OK");
 
             DescriptionEditor.Focus();
             return;
         }
 
-        // CHECK PHOTOS
+        // REQUIRE AT LEAST FIVE PHOTOS
         if (selectedPhotoPaths.Count < 5)
         {
             await DisplayAlert(
                 "Missing Photos",
-                "Please add at least 5 photos of your vehicle.",
+                "Please add at least five photos of your vehicle.",
                 "OK");
 
             return;
         }
 
-        // CREATE VEHICLE OBJECT
+        // CREATE A NEW VEHICLE WITH A UNIQUE ID
         var vehicle = new Vehicle
         {
-            Brand = BrandEntry.Text?.Trim() ?? "",
-            Model = ModelEntry.Text?.Trim() ?? "",
-            Year = YearEntry.Text?.Trim() ?? "",
-            Price = PriceEntry.Text?.Trim() ?? "",
-            Mileage = MileageEntry.Text?.Trim() ?? "",
-            Fuel = FuelPicker.SelectedItem?.ToString() ?? "",
-            Transmission = TransmissionPicker.SelectedItem?.ToString() ?? "",
-            City = CityEntry.Text?.Trim() ?? "",
-            Region = RegionEntry.Text?.Trim() ?? "",
+            Id = Guid.NewGuid().ToString(),
+
+            Brand = brand,
+            Model = model,
+            Year = year,
+            Price = price,
+            Mileage = mileage,
+            Fuel = fuel,
+            Transmission = transmission,
+            City = city,
+            Region = region,
             Description = description,
 
-            // Preserve the selected photo order.
-            // The first photo is the intended main photo.
+            // PRESERVE PHOTO ORDER.
+            // PHOTO AT INDEX ZERO IS THE MAIN PHOTO.
             PhotoPaths = new List<string>(selectedPhotoPaths)
         };
 
-        // SAVE VEHICLE
-        VehicleStorage.AddVehicle(vehicle);
+        try
+        {
+            // SAVE THE VEHICLE
+            VehicleStorage.AddVehicle(vehicle);
 
-        // CONFIRM VEHICLE WAS CREATED
-        await DisplayAlert(
-            "Vehicle Listing",
-            $"{vehicle.Brand} {vehicle.Model} listing has been created successfully.",
-            "OK");
+            await DisplayAlert(
+                "Vehicle Listing",
+                $"{vehicle.Brand} {vehicle.Model} listing has been created successfully.",
+                "OK");
+
+            // RETURN TO THE PREVIOUS PAGE
+            await Navigation.PopAsync();
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert(
+                "Save Failed",
+                $"The vehicle listing could not be saved: {ex.Message}",
+                "OK");
+        }
     }
 }
