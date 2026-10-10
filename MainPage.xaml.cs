@@ -5,7 +5,6 @@ public partial class MainPage : ContentPage
     public MainPage()
     {
         InitializeComponent();
-
         LoadSavedVehicles();
     }
 
@@ -13,20 +12,22 @@ public partial class MainPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
-
         LoadSavedVehicles();
     }
 
+    // BUY A CAR
     private async void OnBuyCarTapped(object sender, TappedEventArgs e)
     {
         await Shell.Current.GoToAsync(nameof(BrowsePage));
     }
 
+    // OPEN FAVOURITES
     private async void OnFavouritesTapped(object sender, TappedEventArgs e)
     {
         await Shell.Current.GoToAsync(nameof(FavouritesPage));
     }
 
+    // SELL A CAR
     private async void OnSellCarTapped(object sender, TappedEventArgs e)
     {
         await Shell.Current.GoToAsync(nameof(SellVehiclePage));
@@ -38,9 +39,32 @@ public partial class MainPage : ContentPage
         // Clear existing cards before reloading.
         SavedVehiclesLayout.Children.Clear();
 
+        // Load vehicles from local storage.
         var vehicles = VehicleStorage.GetVehicles();
 
-        foreach (var vehicle in vehicles)
+        // EXCLUDE THESE SAMPLE LISTINGS FROM THE HOME PAGE.
+        // This hides them without deleting them from storage.
+        var excludedVehicles = new[]
+        {
+            ("Range Rover", "Velar"),
+            ("Toyota", "Land Cruiser"),
+            ("Toyota", "Corolla")
+        };
+
+        var homePageVehicles = vehicles
+            .Where(vehicle => !excludedVehicles.Any(excluded =>
+                string.Equals(
+                    vehicle.Brand?.Trim(),
+                    excluded.Item1,
+                    StringComparison.OrdinalIgnoreCase) &&
+                string.Equals(
+                    vehicle.Model?.Trim(),
+                    excluded.Item2,
+                    StringComparison.OrdinalIgnoreCase)))
+            .ToList();
+
+        // DISPLAY THE REMAINING VEHICLES.
+        foreach (var vehicle in homePageVehicles)
         {
             var vehicleCard = new Border
             {
@@ -63,12 +87,32 @@ public partial class MainPage : ContentPage
             {
                 var image = new Image
                 {
-                    Source = ImageSource.FromFile(vehicle.PhotoPaths[0]),
+                    Source = ImageSource.FromFile(
+                        vehicle.PhotoPaths[0]),
                     HeightRequest = 190,
                     Aspect = Aspect.AspectFill
                 };
 
                 layout.Children.Add(image);
+            }
+            else
+            {
+                // PLACEHOLDER WHEN A VEHICLE HAS NO PHOTO
+                var placeholder = new Grid
+                {
+                    HeightRequest = 190,
+                    BackgroundColor = Color.FromArgb("#292929")
+                };
+
+                placeholder.Children.Add(new Label
+                {
+                    Text = "VEHICLE PHOTO",
+                    TextColor = Colors.Gray,
+                    HorizontalOptions = LayoutOptions.Center,
+                    VerticalOptions = LayoutOptions.Center
+                });
+
+                layout.Children.Add(placeholder);
             }
 
             // VEHICLE INFORMATION
@@ -124,27 +168,25 @@ public partial class MainPage : ContentPage
                 Margin = new Thickness(0, 8, 0, 0)
             };
 
-            // OPEN VEHICLE DETAILS
+            // OPEN THE SELECTED VEHICLE DETAILS
             viewDetailsButton.Clicked += async (sender, e) =>
             {
                 await Navigation.PushAsync(
                     new VehicleDetailsPage(vehicle));
             };
 
-            // ADD INFORMATION TO CARD
+            // ADD INFORMATION TO THE CARD
             information.Children.Add(nameLabel);
             information.Children.Add(priceLabel);
             information.Children.Add(detailsLabel);
             information.Children.Add(locationLabel);
             information.Children.Add(viewDetailsButton);
 
-            // ADD INFORMATION TO LAYOUT
+            // BUILD THE VEHICLE CARD
             layout.Children.Add(information);
-
-            // ADD LAYOUT TO CARD
             vehicleCard.Content = layout;
 
-            // ADD CARD TO HOME PAGE
+            // ADD THE CARD TO THE HOME PAGE
             SavedVehiclesLayout.Children.Add(vehicleCard);
         }
     }
@@ -166,13 +208,17 @@ public partial class MainPage : ContentPage
     private string FormatVehicleName(string name)
     {
         if (string.IsNullOrWhiteSpace(name))
+        {
             return name;
+        }
 
         return string.Join(
             " ",
             name
                 .Trim()
-                .Split(' ', StringSplitOptions.RemoveEmptyEntries)
+                .Split(
+                    ' ',
+                    StringSplitOptions.RemoveEmptyEntries)
                 .Select(word =>
                     char.ToUpper(word[0]) +
                     word.Substring(1).ToLower()));
