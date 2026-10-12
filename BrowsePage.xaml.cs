@@ -1,10 +1,22 @@
 namespace EGET.App;
 
-public partial class BrowsePage : ContentPage
+public partial class BrowsePage : ContentPage, IQueryAttributable
 {
     private List<Vehicle> allVehicles = new();
 
     private bool isRefreshingFilters;
+
+    private string pendingSearchText = string.Empty;
+
+    // RECEIVE SEARCH TEXT FROM THE HOME PAGE
+    public void ApplyQueryAttributes(
+        IDictionary<string, object> query)
+    {
+        if (query.TryGetValue("SearchText", out object? value))
+        {
+            pendingSearchText = value?.ToString() ?? string.Empty;
+        }
+    }
 
     public BrowsePage()
     {
@@ -19,6 +31,12 @@ public partial class BrowsePage : ContentPage
         base.OnAppearing();
 
         LoadVehicles();
+
+        if (!string.IsNullOrWhiteSpace(pendingSearchText))
+        {
+            SearchEntry.Text = pendingSearchText;
+            pendingSearchText = string.Empty;
+        }
     }
 
     // LOAD FILTER OPTIONS

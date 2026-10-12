@@ -106,24 +106,26 @@
                                VerticalOptions="Center"
                                Margin="0,0,10,0" />
 
-                        <Entry Grid.Column="1"
-                               Placeholder="Search cars, brands or models"
-                               PlaceholderColor="#777777"
-                               TextColor="#111111"
-                               FontSize="15"
-                               VerticalOptions="Center" />
+                        <Entry x:Name="HomeSearchEntry"
+       Grid.Column="1"
+       Placeholder="Search cars, brands or models"
+       PlaceholderColor="#777777"
+       TextColor="#111111"
+       FontSize="15"
+       VerticalOptions="Center" />
 
                     </Grid>
 
                 </Border>
 
                 <Button Text="Search Vehicles"
-                        HeightRequest="50"
-                        CornerRadius="10"
-                        BackgroundColor="#F6C800"
-                        TextColor="#111111"
-                        FontAttributes="Bold"
-                        FontSize="15" />
+        HeightRequest="50"
+        CornerRadius="10"
+        BackgroundColor="#F6C800"
+        TextColor="#111111"
+        FontAttributes="Bold"
+        FontSize="15"
+        Clicked="OnSearchVehiclesClicked" />
 
             </VerticalStackLayout>
 

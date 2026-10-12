@@ -33,6 +33,23 @@ public partial class MainPage : ContentPage
         await Shell.Current.GoToAsync(nameof(BrowsePage));
     }
 
+    // SEARCH VEHICLES FROM THE HOME PAGE
+    private async void OnSearchVehiclesClicked(
+        object sender,
+        EventArgs e)
+    {
+        string searchText = HomeSearchEntry.Text?.Trim() ?? string.Empty;
+
+        var navigationParameters = new Dictionary<string, object>
+    {
+        { "SearchText", searchText }
+    };
+
+        await Shell.Current.GoToAsync(
+            nameof(BrowsePage),
+            navigationParameters);
+    }
+
     // OPEN FAVOURITES
     private async void OnFavouritesTapped(
         object sender,
