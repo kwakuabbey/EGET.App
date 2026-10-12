@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:EGET.App"
+    x:Class="EGET.App.MyVehiclesPage"
+    Title="My Vehicles"
+    BackgroundColor="#111111">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:VehicleStatusColorConverter
+                x:Key="VehicleStatusColorConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,*"
+          Padding="20">
+
+        <!-- PAGE HEADER -->
+        <VerticalStackLayout Spacing="6">
+
+            <Label
+                Text="My Vehicles"
+                FontSize="28"
+                FontAttributes="Bold"
+                TextColor="#F6C800" />
+
+            <Label
+                Text="Manage your vehicle listings"
+                FontSize="14"
+                TextColor="#BBBBBB" />
+
+            <!-- DASHBOARD SUMMARY -->
+            <Border
+                BackgroundColor="#1F1F1F"
+                Stroke="#333333"
+                StrokeThickness="1"
+                StrokeShape="RoundRectangle 12"
+                Padding="18"
+                Margin="0,12,0,0">
+
+                <Grid ColumnDefinitions="*,Auto"
+                      ColumnSpacing="12">
+
+                    <VerticalStackLayout Spacing="4">
+
+                        <Label
+                            Text="TOTAL LISTINGS"
+                            FontSize="12"
+                            FontAttributes="Bold"
+                            TextColor="#BBBBBB" />
+
+                        <Label
+                            x:Name="TotalListingsLabel"
+                            Text="0 vehicles"
+                            FontSize="24"
+                            FontAttributes="Bold"
+                            TextColor="#F6C800" />
+
+                        <Label
+                            Text="Vehicles you've listed on EGET"
+                            FontSize="12"
+                            TextColor="#BBBBBB" />
+
+                    </VerticalStackLayout>
+
+                    <Border
+                        Grid.Column="1"
+                        WidthRequest="55"
+                        HeightRequest="55"
+                        BackgroundColor="#2A2A2A"
+                        Stroke="#F6C800"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 12"
+                        VerticalOptions="Center">
+
+                        <Label
+                            Text="🚘"
+                            FontSize="28"
+                            HorizontalTextAlignment="Center"
+                            VerticalTextAlignment="Center" />
+
+                    </Border>
+
+                </Grid>
+
+            </Border>
+
+            <!-- ADD VEHICLE BUTTON -->
+            <Button
+                Text="+ Add New Vehicle"
+                Clicked="OnAddVehicleClicked"
+                BackgroundColor="#F6C800"
+                TextColor="#111111"
+                FontAttributes="Bold"
+                CornerRadius="10"
+                HeightRequest="50"
+                Margin="0,12,0,15" />
+
+            
+
+        </VerticalStackLayout>
+
+        <!-- VEHICLE LIST -->
+        <CollectionView
+            x:Name="MyVehiclesCollection"
+            Grid.Row="1"
+            SelectionMode="None">
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+
+                    <!-- VEHICLE CARD -->
+                    <Border
+                        BackgroundColor="#1F1F1F"
+                        Stroke="#333333"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 15"
+                        Margin="0,0,0,18">
+
+                        <VerticalStackLayout Spacing="0">
+
+                            <!-- VEHICLE PHOTO -->
+                            <Grid HeightRequest="200">
+
+                                <Image
+                                    Source="{Binding PhotoPaths[0]}"
+                                    HeightRequest="200"
+                                    Aspect="AspectFill" />
+
+                                <!-- YEAR BADGE -->
+                                <Border
+                                    HorizontalOptions="Start"
+                                    VerticalOptions="Start"
+                                    Margin="12"
+                                    Padding="10,5"
+                                    BackgroundColor="#F6C800"
+                                    StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 8">
+
+                                    <Label
+                                        Text="{Binding Year}"
+                                        FontSize="13"
+                                        FontAttributes="Bold"
+                                        TextColor="#111111" />
+
+                                </Border>
+
+                            </Grid>
+
+                            <!-- VEHICLE INFORMATION -->
+                            <VerticalStackLayout
+                                Padding="16"
+                                Spacing="12">
+
+                                <!-- BRAND, MODEL AND STATUS -->
+                                <Grid ColumnDefinitions="*,Auto"
+      ColumnSpacing="10">
+
+                                    <VerticalStackLayout Spacing="3">
+
+                                        <Label
+                                          Text="{Binding Brand}"
+                                          FontSize="13"
+                                          FontAttributes="Bold"
+                                          TextColor="#BBBBBB" />
+
+                                        <Label
+                                          Text="{Binding Model}"
+                                          FontSize="22"
+                                          FontAttributes="Bold"
+                                          TextColor="White" />
+
+                                    </VerticalStackLayout>
+                                    
+                                    <!-- LISTING STATUS -->
+                                    <Border
+                                       Grid.Column="1"
+                                       BackgroundColor="{Binding Status, Converter={StaticResource VehicleStatusColorConverter}, ConverterParameter=background}"
+                                       Stroke="{Binding Status, Converter={StaticResource VehicleStatusColorConverter}, ConverterParameter=border}"
+                                       StrokeThickness="1"
+                                       StrokeShape="RoundRectangle 8"
+                                       Padding="10,6"
+                                       VerticalOptions="Start">
+ 
+                                        <Label
+                                           Text="{Binding Status}"
+                                           FontSize="11"
+                                           FontAttributes="Bold"
+                                           TextColor="{Binding Status, Converter={StaticResource VehicleStatusColorConverter}}" />
+
+                                    </Border>
+
+                                </Grid>
+
+                                <!-- PRICE -->
+                                <Label
+                                    Text="{Binding FormattedPrice}"
+                                    FontSize="23"
+                                    FontAttributes="Bold"
+                                    TextColor="#F6C800" />
+
+                                <!-- VEHICLE SPECIFICATIONS -->
+                                <Grid
+                                    ColumnDefinitions="*,*"
+                                    ColumnSpacing="10">
+
+                                    <Border
+                                        BackgroundColor="#2A2A2A"
+                                        StrokeThickness="0"
+                                        StrokeShape="RoundRectangle 8"
+                                        Padding="10">
+
+                                        <VerticalStackLayout Spacing="4">
+
+                                            <Label
+                                                Text="YEAR"
+                                                FontSize="10"
+                                                FontAttributes="Bold"
+                                                TextColor="#BBBBBB" />
+
+                                            <Label
+                                                Text="{Binding Year}"
+                                                FontSize="14"
+                                                FontAttributes="Bold"
+                                                TextColor="White" />
+
+                                        </VerticalStackLayout>
+
+                                    </Border>
+
+                                    <Border
+                                        Grid.Column="1"
+                                        BackgroundColor="#2A2A2A"
+                                        StrokeThickness="0"
+                                        StrokeShape="RoundRectangle 8"
+                                        Padding="10">
+
+                                        <VerticalStackLayout Spacing="4">
+
+                                            <Label
+                                                Text="MILEAGE"
+                                                FontSize="10"
+                                                FontAttributes="Bold"
+                                                TextColor="#BBBBBB" />
+
+                                            <Label
+                                                Text="{Binding Mileage, StringFormat='{0} km'}"
+                                                FontSize="14"
+                                                FontAttributes="Bold"
+                                                TextColor="White" />
+
+                                        </VerticalStackLayout>
+
+                                    </Border>
+
+                                </Grid>
+
+                                <!-- LOCATION -->
+                                <Grid
+                                    ColumnDefinitions="Auto,*"
+                                    ColumnSpacing="8">
+
+                                    <Label
+                                        Text="📍"
+                                        FontSize="16"
+                                        VerticalOptions="Center" />
+
+                                    <Label
+                                        Grid.Column="1"
+                                        Text="{Binding City}"
+                                        FontSize="14"
+                                        TextColor="#BBBBBB"
+                                        VerticalOptions="Center" />
+
+                                </Grid>
+
+                                <!-- VIEW DETAILS -->
+                                <Button
+                                    Text="View Details"
+                                    Clicked="OnViewDetailsClicked"
+                                    CommandParameter="{Binding .}"
+                                    BackgroundColor="#F6C800"
+                                    TextColor="#111111"
+                                    FontAttributes="Bold"
+                                    CornerRadius="9"
+                                    HeightRequest="48" />
+
+                                <!-- EDIT AND DELETE ACTIONS -->
+                                <Grid
+                                    ColumnDefinitions="*,*"
+                                    ColumnSpacing="10">
+
+                                    <Button
+                                        Text="Edit Listing"
+                                        Clicked="OnEditVehicleClicked"
+                                        CommandParameter="{Binding .}"
+                                        BackgroundColor="#2A2A2A"
+                                        TextColor="White"
+                                        BorderColor="#F6C800"
+                                        BorderWidth="1"
+                                        CornerRadius="9"
+                                        HeightRequest="45"
+                                        FontSize="13" />
+
+                                    <Button
+                                        Grid.Column="1"
+                                        Text="Delete Listing"
+                                        Clicked="OnDeleteVehicleClicked"
+                                        CommandParameter="{Binding .}"
+                                        BackgroundColor="#7A1F1F"
+                                        TextColor="White"
+                                        CornerRadius="9"
+                                        HeightRequest="45"
+                                        FontSize="13" />
+
+                                    <!-- CHANGE LISTING STATUS -->
+                                    <Button
+                                        Text="Change Status"
+                                        Clicked="OnChangeStatusClicked"
+                                        CommandParameter="{Binding .}"
+                                        BackgroundColor="#173D28"
+                                        TextColor="#7CFC98"
+                                        BorderColor="#2E8B57"
+                                        BorderWidth="1"
+                                        CornerRadius="8" />
+
+                                </Grid>
+
+                            </VerticalStackLayout>
+
+                        </VerticalStackLayout>
+
+                    </Border>
+
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+            <!-- EMPTY LIST -->
+            <CollectionView.EmptyView>
+
+                <VerticalStackLayout
+                    Spacing="12"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center">
+
+                    <Label
+                        Text="🚗"
+                        FontSize="48"
+                        HorizontalTextAlignment="Center" />
+
+                    <Label
+                        Text="No vehicles listed yet"
+                        FontSize="18"
+                        FontAttributes="Bold"
+                        TextColor="White"
+                        HorizontalTextAlignment="Center" />
+
+                    <Label
+                        Text="Your vehicles will appear here after you list them."
+                        FontSize="14"
+                        TextColor="#BBBBBB"
+                        HorizontalTextAlignment="Center" />
+
+                </VerticalStackLayout>
+
+            </CollectionView.EmptyView>
+
+        </CollectionView>
+
+    </Grid>
+
+</ContentPage>

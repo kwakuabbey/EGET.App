@@ -13,6 +13,37 @@ public class Vehicle
 
     public string Price { get; set; } = string.Empty;
 
+    // VEHICLE LISTING STATUS
+    public string Status { get; set; } = "Active";
+
+    public string FormattedPrice
+    {
+        get
+        {
+            if (string.IsNullOrWhiteSpace(Price))
+            {
+                return "Price not specified";
+            }
+
+            string cleanedPrice = Price
+                .Replace("GH₵", "", StringComparison.OrdinalIgnoreCase)
+                .Replace("GHS", "", StringComparison.OrdinalIgnoreCase)
+                .Replace(",", "")
+                .Trim();
+
+            if (decimal.TryParse(
+                cleanedPrice,
+                System.Globalization.NumberStyles.Number,
+                System.Globalization.CultureInfo.InvariantCulture,
+                out decimal amount))
+            {
+                return $"GH₵ {amount.ToString("#,##0.##", System.Globalization.CultureInfo.InvariantCulture)}";
+            }
+
+            return $"GH₵ {Price.Trim()}";
+        }
+    }
+
     public string Mileage { get; set; } = string.Empty;
 
     public string Fuel { get; set; } = string.Empty;

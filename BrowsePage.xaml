@@ -7,13 +7,14 @@
     BackgroundColor="#111111"
     Title="Browse Cars">
 
-    <ScrollView>
+    <Grid RowDefinitions="Auto,*">
 
+        <!-- PAGE HEADER -->
         <VerticalStackLayout
-            Padding="20"
-            Spacing="18">
+            Grid.Row="0"
+            Padding="20,16,20,10"
+            Spacing="5">
 
-            <!-- PAGE TITLE -->
             <Label
                 Text="Browse Vehicles"
                 FontSize="28"
@@ -25,118 +26,311 @@
                 FontSize="15"
                 TextColor="#BBBBBB" />
 
-            <!-- SEARCH -->
-            <Border
-                BackgroundColor="White"
-                StrokeThickness="0"
-                StrokeShape="RoundRectangle 14"
-                Padding="14">
+        </VerticalStackLayout>
 
-                <Grid ColumnDefinitions="Auto,*">
+        <!-- SEARCH, FILTERS AND RESULTS -->
+        <ScrollView
+            Grid.Row="1">
 
-                    <Label
-                        Text="🔍"
-                        FontSize="20"
-                        VerticalOptions="Center" />
+            <VerticalStackLayout
+                Padding="20,10,20,24"
+                Spacing="16">
 
-                    <Entry
-    Grid.Column="1"
-    Placeholder="Search brand or model"
-    PlaceholderColor="#777777"
-    TextColor="#111111"
-    BackgroundColor="Transparent"
-    TextChanged="OnSearchTextChanged" />
+                <!-- SEARCH BOX -->
+                <Border
+                    BackgroundColor="White"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 14"
+                    Padding="12">
 
-                </Grid>
-
-            </Border>
-
-            <!-- FILTER BUTTONS -->
-            <Grid
-                ColumnDefinitions="*,*"
-                ColumnSpacing="12">
-
-                <Button
-                    Text="Brand"
-                    BackgroundColor="#222222"
-                    TextColor="White"
-                    CornerRadius="12" />
-
-                <Button
-                    Grid.Column="1"
-                    Text="Price"
-                    BackgroundColor="#222222"
-                    TextColor="White"
-                    CornerRadius="12" />
-
-            </Grid>
-
-            <!-- VEHICLES -->
-            <Label
-                Text="Available Vehicles"
-                FontSize="21"
-                FontAttributes="Bold"
-                TextColor="White"
-                Margin="0,8,0,0" />
-
-            <!-- VEHICLE CARD 1 -->
-            <Border
-    x:Name="VehicleCard"
-    BackgroundColor="#1F1F1F"
-    Stroke="#F7C900"
-    StrokeThickness="1"
-    StrokeShape="RoundRectangle 16">
-
-                <VerticalStackLayout>
-
-                    <Border
-                        StrokeThickness="0"
-                        StrokeShape="RoundRectangle 16,16,0,0">
-
-                        <Image
-    Source="corolla1.png"
-    HeightRequest="190"
-    Aspect="AspectFill" />
-                    </Border>
-
-                    <VerticalStackLayout
-                        Padding="15"
-                        Spacing="5">
+                    <Grid
+                        ColumnDefinitions="Auto,*"
+                        ColumnSpacing="10">
 
                         <Label
-                            Text="2020 Toyota Corolla"
-                            FontSize="19"
-                            FontAttributes="Bold"
-                            TextColor="White" />
+                            Text="🔍"
+                            FontSize="20"
+                            VerticalOptions="Center" />
+
+                        <Entry
+                            x:Name="SearchEntry"
+                            Grid.Column="1"
+                            Placeholder="Search brand, model or year"
+                            PlaceholderColor="#777777"
+                            TextColor="#111111"
+                            BackgroundColor="Transparent"
+                            ClearButtonVisibility="WhileEditing"
+                            TextChanged="OnSearchTextChanged" />
+
+                    </Grid>
+
+                </Border>
+
+                <!-- BRAND AND YEAR FILTERS -->
+                <Grid
+                    ColumnDefinitions="*,*"
+                    ColumnSpacing="12">
+
+                    <VerticalStackLayout Spacing="6">
 
                         <Label
-                            Text="GH₵ 185,000"
-                            FontSize="18" 
-                            FontAttributes="Bold"
-                            TextColor="#F7C900" />
+                            Text="Brand"
+                            TextColor="#BBBBBB"
+                            FontSize="13" />
 
-                        <Label
-                            Text="Automatic • Petrol • Accra"
-                            FontSize="14"
-                            TextColor="#BBBBBB" />
+                        <Border
+                            BackgroundColor="#222222"
+                            Stroke="#444444"
+                            StrokeShape="RoundRectangle 10"
+                            Padding="10,2">
 
-                        <Button
-    Text="View Details"
-    BackgroundColor="#F7C900"
-    TextColor="Black"
-    FontAttributes="Bold"
-    CornerRadius="10"
-    Margin="0,8,0,0"
-    Clicked="OnViewDetailsClicked" />
+                            <Picker
+                                x:Name="BrandPicker"
+                                Title="All brands"
+                                TextColor="White"
+                                TitleColor="#BBBBBB"
+                                BackgroundColor="Transparent"
+                                SelectedIndexChanged="OnFilterChanged" />
+
+                        </Border>
 
                     </VerticalStackLayout>
 
+                    <VerticalStackLayout
+                        Grid.Column="1"
+                        Spacing="6">
+
+                        <Label
+                            Text="Year"
+                            TextColor="#BBBBBB"
+                            FontSize="13" />
+
+                        <Border
+                            BackgroundColor="#222222"
+                            Stroke="#444444"
+                            StrokeShape="RoundRectangle 10"
+                            Padding="10,2">
+
+                            <Picker
+                                x:Name="YearPicker"
+                                Title="All years"
+                                TextColor="White"
+                                TitleColor="#BBBBBB"
+                                BackgroundColor="Transparent"
+                                SelectedIndexChanged="OnFilterChanged" />
+
+                        </Border>
+
+                    </VerticalStackLayout>
+
+                </Grid>
+
+                <!-- PRICE FILTERS -->
+                <VerticalStackLayout Spacing="8">
+
+                    <Label
+                        Text="Price Range (GH₵)"
+                        FontSize="15"
+                        FontAttributes="Bold"
+                        TextColor="White" />
+
+                    <Grid
+                        ColumnDefinitions="*,*"
+                        ColumnSpacing="12">
+
+                        <Border
+                            BackgroundColor="#222222"
+                            Stroke="#444444"
+                            StrokeShape="RoundRectangle 10"
+                            Padding="10,2">
+
+                            <Entry
+                                x:Name="MinimumPriceEntry"
+                                Placeholder="Minimum price"
+                                PlaceholderColor="#888888"
+                                TextColor="White"
+                                Keyboard="Numeric"
+                                BackgroundColor="Transparent"
+                                TextChanged="OnPriceChanged" />
+
+                        </Border>
+
+                        <Border
+                            Grid.Column="1"
+                            BackgroundColor="#222222"
+                            Stroke="#444444"
+                            StrokeShape="RoundRectangle 10"
+                            Padding="10,2">
+
+                            <Entry
+                                x:Name="MaximumPriceEntry"
+                                Placeholder="Maximum price"
+                                PlaceholderColor="#888888"
+                                TextColor="White"
+                                Keyboard="Numeric"
+                                BackgroundColor="Transparent"
+                                TextChanged="OnPriceChanged" />
+
+                        </Border>
+
+                    </Grid>
+
                 </VerticalStackLayout>
 
-            </Border>
+                <!-- LOCATION FILTER -->
+                <VerticalStackLayout Spacing="6">
 
-        </VerticalStackLayout>
+                    <Label
+                        Text="Location"
+                        TextColor="#BBBBBB"
+                        FontSize="13" />
 
-    </ScrollView>
+                    <Border
+                        BackgroundColor="#222222"
+                        Stroke="#444444"
+                        StrokeShape="RoundRectangle 10"
+                        Padding="10,2">
+
+                        <Entry
+                            x:Name="LocationEntry"
+                            Placeholder="Enter city or region"
+                            PlaceholderColor="#888888"
+                            TextColor="White"
+                            BackgroundColor="Transparent"
+                            TextChanged="OnFilterChanged" />
+
+                    </Border>
+
+                </VerticalStackLayout>
+
+                <!-- FUEL AND TRANSMISSION -->
+                <Grid
+                    ColumnDefinitions="*,*"
+                    ColumnSpacing="12">
+
+                    <VerticalStackLayout Spacing="6">
+
+                        <Label
+                            Text="Fuel Type"
+                            TextColor="#BBBBBB"
+                            FontSize="13" />
+
+                        <Border
+                            BackgroundColor="#222222"
+                            Stroke="#444444"
+                            StrokeShape="RoundRectangle 10"
+                            Padding="10,2">
+
+                            <Picker
+                                x:Name="FuelPicker"
+                                Title="All fuel types"
+                                TextColor="White"
+                                TitleColor="#BBBBBB"
+                                BackgroundColor="Transparent"
+                                SelectedIndexChanged="OnFilterChanged" />
+
+                        </Border>
+
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout
+                        Grid.Column="1"
+                        Spacing="6">
+
+                        <Label
+                            Text="Transmission"
+                            TextColor="#BBBBBB"
+                            FontSize="13" />
+
+                        <Border
+                            BackgroundColor="#222222"
+                            Stroke="#444444"
+                            StrokeShape="RoundRectangle 10"
+                            Padding="10,2">
+
+                            <Picker
+                                x:Name="TransmissionPicker"
+                                Title="All transmissions"
+                                TextColor="White"
+                                TitleColor="#BBBBBB"
+                                BackgroundColor="Transparent"
+                                SelectedIndexChanged="OnFilterChanged" />
+
+                        </Border>
+
+                    </VerticalStackLayout>
+
+                </Grid>
+
+                <!-- RESET FILTERS -->
+                <Button
+                    Text="Clear All Filters"
+                    BackgroundColor="#333333"
+                    TextColor="White"
+                    BorderColor="#555555"
+                    BorderWidth="1"
+                    CornerRadius="10"
+                    Clicked="OnClearFiltersClicked" />
+
+                <!-- RESULTS HEADING -->
+                <Grid
+                    ColumnDefinitions="*,Auto"
+                    Margin="0,8,0,0">
+
+                    <Label
+                        Text="Available Vehicles"
+                        FontSize="21"
+                        FontAttributes="Bold"
+                        TextColor="White"
+                        VerticalOptions="Center" />
+
+                    <Label
+                        x:Name="ResultsCountLabel"
+                        Grid.Column="1"
+                        Text="0 cars"
+                        FontSize="13"
+                        TextColor="#F7C900"
+                        VerticalOptions="Center" />
+
+                </Grid>
+
+                <!-- EMPTY RESULTS MESSAGE -->
+                <VerticalStackLayout
+                    x:Name="EmptyResultsLayout"
+                    IsVisible="False"
+                    Padding="15,30"
+                    Spacing="10">
+
+                    <Label
+                        Text="🚗"
+                        FontSize="42"
+                        HorizontalOptions="Center" />
+
+                    <Label
+                        Text="No vehicles found"
+                        FontSize="20"
+                        FontAttributes="Bold"
+                        TextColor="White"
+                        HorizontalOptions="Center" />
+
+                    <Label
+                        Text="Try changing your search or filters."
+                        FontSize="14"
+                        TextColor="#BBBBBB"
+                        HorizontalTextAlignment="Center"
+                        HorizontalOptions="Center" />
+
+                </VerticalStackLayout>
+
+                <!-- DYNAMIC VEHICLE RESULTS -->
+                <VerticalStackLayout
+                    x:Name="VehicleResultsLayout"
+                    Spacing="16" />
+
+            </VerticalStackLayout>
+
+        </ScrollView>
+
+    </Grid>
 
 </ContentPage>

@@ -207,6 +207,56 @@
 
             </VerticalStackLayout>
 
+            <!-- MY VEHICLES / SELLER DASHBOARD -->
+            <VerticalStackLayout Padding="20,0,20,25">
+
+                <Border
+                    BackgroundColor="#2A2A2A"
+                    Stroke="#F6C800"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 12"
+                    HeightRequest="60">
+
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Tapped="OnMyVehiclesTapped" />
+                    </Border.GestureRecognizers>
+
+                    <Grid
+                        ColumnDefinitions="Auto,*"
+                        ColumnSpacing="12"
+                        Padding="18,0"
+                        VerticalOptions="Center">
+
+                        <Label
+                            Text="🚘"
+                            FontSize="24"
+                            VerticalOptions="Center" />
+
+                        <VerticalStackLayout
+                            Grid.Column="1"
+                            Spacing="2"
+                            VerticalOptions="Center">
+
+                            <Label
+                                Text="My Vehicles"
+                                FontSize="16"
+                                FontAttributes="Bold"
+                                TextColor="#F6C800" />
+
+                            <Label
+                                Text="Manage your vehicle listings"
+                                FontSize="12"
+                                TextColor="White"
+                                Opacity="0.75" />
+
+                        </VerticalStackLayout>
+
+                    </Grid>
+
+                </Border>
+
+            </VerticalStackLayout>
 
             <!-- LATEST VEHICLES -->
             <VerticalStackLayout Padding="20,5,20,30"
@@ -234,8 +284,8 @@
     x:Name="SavedVehiclesLayout"
     Spacing="15" />
 
-                
-                       
+
+
             </VerticalStackLayout>
 
         </VerticalStackLayout>
