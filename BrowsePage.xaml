@@ -273,52 +273,94 @@
                     Clicked="OnClearFiltersClicked" />
 
                 <!-- RESULTS HEADING -->
-                <Grid
-                    ColumnDefinitions="*,Auto"
-                    Margin="0,8,0,0">
+                <VerticalStackLayout Spacing="10" Margin="0,8,0,0">
 
-                    <Label
-                        Text="Available Vehicles"
-                        FontSize="21"
-                        FontAttributes="Bold"
-                        TextColor="White"
-                        VerticalOptions="Center" />
+                    <Grid ColumnDefinitions="*,Auto">
 
-                    <Label
-                        x:Name="ResultsCountLabel"
-                        Grid.Column="1"
-                        Text="0 cars"
-                        FontSize="13"
-                        TextColor="#F7C900"
-                        VerticalOptions="Center" />
+                        <Label
+            Text="Available Vehicles"
+            FontSize="21"
+            FontAttributes="Bold"
+            TextColor="White"
+            VerticalOptions="Center" />
 
-                </Grid>
+                        <Label
+            x:Name="ResultsCountLabel"
+            Grid.Column="1"
+            Text="0 cars"
+            FontSize="13"
+            TextColor="#F7C900"
+            VerticalOptions="Center" />
+
+                    </Grid>
+
+                    <!-- SORT VEHICLES -->
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+
+                        <Label
+            Text="Sort by"
+            FontSize="14"
+            TextColor="#BBBBBB"
+            VerticalOptions="Center" />
+
+                        <Border
+            Grid.Column="1"
+            BackgroundColor="#222222"
+            Stroke="#444444"
+            StrokeShape="RoundRectangle 10"
+            Padding="10,2">
+
+                            <Picker
+                x:Name="SortPicker"
+                Title="Sort vehicles"
+                TextColor="White"
+                TitleColor="#BBBBBB"
+                BackgroundColor="Transparent"
+                SelectedIndexChanged="OnSortChanged" />
+
+                        </Border>
+
+                    </Grid>
+
+                </VerticalStackLayout>
 
                 <!-- EMPTY RESULTS MESSAGE -->
                 <VerticalStackLayout
-                    x:Name="EmptyResultsLayout"
-                    IsVisible="False"
-                    Padding="15,30"
-                    Spacing="10">
+    x:Name="EmptyResultsLayout"
+    IsVisible="False"
+    Padding="20,30"
+    Spacing="12">
 
                     <Label
-                        Text="🚗"
-                        FontSize="42"
-                        HorizontalOptions="Center" />
+        Text="🚗"
+        FontSize="48"
+        HorizontalOptions="Center" />
 
                     <Label
-                        Text="No vehicles found"
-                        FontSize="20"
-                        FontAttributes="Bold"
-                        TextColor="White"
-                        HorizontalOptions="Center" />
+        x:Name="EmptyResultsTitle"
+        Text="No matching vehicles"
+        FontSize="21"
+        FontAttributes="Bold"
+        TextColor="White"
+        HorizontalOptions="Center"
+        HorizontalTextAlignment="Center" />
 
                     <Label
-                        Text="Try changing your search or filters."
-                        FontSize="14"
-                        TextColor="#BBBBBB"
-                        HorizontalTextAlignment="Center"
-                        HorizontalOptions="Center" />
+        x:Name="EmptyResultsMessage"
+        Text="We couldn't find vehicles matching your search. Try another brand, model, location, or price range."
+        FontSize="14"
+        TextColor="#BBBBBB"
+        HorizontalOptions="Center"
+        HorizontalTextAlignment="Center" />
+
+                    <Button
+        Text="Clear Search and Filters"
+        BackgroundColor="#F7C900"
+        TextColor="#111111"
+        FontAttributes="Bold"
+        CornerRadius="10"
+        HeightRequest="48"
+        Clicked="OnClearFiltersClicked" />
 
                 </VerticalStackLayout>
 

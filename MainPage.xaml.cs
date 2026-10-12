@@ -76,13 +76,12 @@ public partial class MainPage : ContentPage
         var vehicles = VehicleStorage.GetVehicles();
 
         // EXCLUDE ORIGINAL SAMPLE LISTINGS
-        // THESE VEHICLES ARE NOT DELETED FROM STORAGE
+        // KEEP NEW SELLER LISTINGS VISIBLE
         var excludedVehicles = new[]
         {
-            ("Range Rover", "Velar"),
-            ("Toyota", "Land Cruiser"),
-            ("Toyota", "Corolla")
-        };
+    ("Range Rover", "Velar"),
+    ("Toyota", "Land Cruiser")
+};
 
         // SHOW ONLY ACTIVE VEHICLES
         // KEEP THE ORIGINAL SAMPLE LISTINGS EXCLUDED
